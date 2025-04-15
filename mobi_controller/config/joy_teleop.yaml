@@ -1,37 +1,36 @@
-#Wired
-# Wired Joystick Config
+#Wired Joystick Config
 joy_teleop:
   ros__parameters:
     move:
       type: topic
       interface_type: geometry_msgs/msg/Twist
       topic_name: input_joy/cmd_vel
-      deadman_buttons: [7]  # Correct button for enabling movement
+      deadman_buttons: [7]  
       axis_mappings:
-        linear-x:   # Correct mapping for linear.x
-          axis: 3   # Axis for linear motion (usually joystick Y-axis)
+        twist-linear-x:   
+          axis: 3   
           scale: 1.0
           offset: 0.0
-        angular-z:  # Correct mapping for angular.z
-          axis: 0   # Axis for angular motion (usually joystick X-axis)
+        twist-angular-z: 
+          axis: 0   
           scale: 1.0
           offset: 0.0
 
 
-#PS4 Wireless
+#PS4 Wireless Config
 # joy_teleop:
-  # ros__parameters:
-  #   move:
-  #     type: topic
-  #     interface_type: geometry_msgs/msg/Twist
-  #     topic_name: input_joy/cmd_vel
-  #     deadman_buttons: [5]
-  #     axis_mappings:
-  #       twist-linear-x:
-  #         axis: 4
-  #         scale: 1.0
-  #         offset: 0.0
-  #       twist-angular-z:
-  #         axis: 0
-  #         scale: 1.0
-  #         offset: 0.0
+#   ros__parameters:
+#     move:
+#       type: topic
+#       interface_type: geometry_msgs/msg/Twist
+#       topic_name: input_joy/cmd_vel
+#       deadman_buttons: [5]
+#       axis_mappings:
+#         twist-linear-x:
+#           axis: 4
+#           scale: 1.0
+#           offset: 0.0
+#         twist-angular-z:
+#           axis: 0
+#           scale: 1.0
+#           offset: 0.0

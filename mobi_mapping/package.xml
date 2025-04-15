@@ -3,8 +3,8 @@
 <package format="3">
   <name>mobi_mapping</name>
   <version>0.0.0</version>
-  <description>mobi Mapping Package</description>
-  <maintainer email="kutkarsh706@gmail.com">utk</maintainer>
+  <description>Mobi Mapping Package</description>
+  <maintainer email="kutkarsh706@gmail.com">Utkarsh</maintainer>
   <license>Apache 2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
@@ -22,7 +22,6 @@
   <exec_depend>slam_toolbox</exec_depend>
   <exec_depend>nav2_map_server</exec_depend>
   <exec_depend>nav2_lifecycle_manager</exec_depend>
-  <exec_depend>mobi_localization</exec_depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

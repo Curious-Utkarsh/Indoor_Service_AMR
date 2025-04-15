@@ -15,10 +15,18 @@
         <!-- ros2_control Real Robot -->
         <xacro:unless value="$(arg is_sim)">
             <hardware>
-                <plugin>mobi_firmware/MobiInterface</plugin>
-                <param name="port">/dev/ttyUSB1</param>
+                <xacro:if value="${serial_port == '/dev/ttyUSB0'}">
+                    <plugin>mobi_firmware/MobiInterface</plugin>
+                    <param name="port">/dev/ttyUSB1</param>
+                </xacro:if>
+        
+                <xacro:if value="${serial_port == '/dev/ttyUSB1'}">
+                    <plugin>mobi_firmware/MobiInterface</plugin>
+                    <param name="port">/dev/ttyUSB0</param>
+                </xacro:if>
             </hardware>
         </xacro:unless>
+        
         
         <!-- ros2_control Common Interfaces -->
         <joint name="right_wheel_joint">

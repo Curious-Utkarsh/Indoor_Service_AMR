@@ -2,8 +2,8 @@
 <package format="3">
   <name>mobi_controller</name>
   <version>0.0.0</version>
-  <description>The mobi_controller package</description>
-  <maintainer email="kutkarsh706@gmail.com">utk</maintainer>
+  <description>Mobi Controller Package</description>
+  <maintainer email="kutkarsh706@gmail.com">Utkarsh</maintainer>
   <license>Apache 2.0</license>
   <author email="kutkarsh706@gmail.com">utk</author>
 

@@ -10,11 +10,25 @@ from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
     use_slam = LaunchConfiguration("use_slam")
+    serial_port = LaunchConfiguration("serial_port") #Port For RpLidar, based on this, arduino port is automatically decided in urdf, done.
+    map_name = LaunchConfiguration("map_name")
 
     use_slam_arg = DeclareLaunchArgument(
         "use_slam",
         default_value="false"
     )
+
+    serial_port_arg = DeclareLaunchArgument(
+        "serial_port",
+        default_value="/dev/ttyUSB0",
+        description="Serial port for RPLIDAR"
+    )
+
+    map_name_arg = DeclareLaunchArgument(
+        "map_name",
+        default_value="hostel_corridor"
+    )
+
 
     hardware_interface = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -23,20 +37,28 @@ def generate_launch_description():
                 "launch",
                 "hardware_interface.launch.py"
             )
-        )
+        ),
+        launch_arguments={
+            "serial_port": serial_port #Passes serial port to urdf
+        }.items()
     )
 
     laser_driver = Node(
         package="rplidar_ros",
         executable="rplidar_node",
         name="rplidar_node",
-        parameters=[os.path.join(
-            get_package_share_directory("mobi_bringup"),
-            "config",
-            "rplidar_a1.yaml"
-        )],
+        parameters=[{
+            "channel_type": "serial",
+            "serial_port": serial_port,
+            "serial_baudrate": 115200,
+            "frame_id": "laser_link",
+            "inverted": False,
+            "angle_compensate": True,
+            "scan_mode": "Sensitivity"
+        }],
         output="screen"
     )
+
 
     controller = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -46,7 +68,6 @@ def generate_launch_description():
                 "controller.launch.py"
             )
         ),
-        launch_arguments={"use_sim_time": "False"}.items()
     )
 
     joystick = IncludeLaunchDescription(
@@ -74,7 +95,10 @@ def generate_launch_description():
                 "global_localization.launch.py"
             )
         ),
-        launch_arguments={"use_sim_time": "False"}.items(),
+        launch_arguments={
+            "use_sim_time": "False",
+            "map_name": map_name
+        }.items(),
         condition=UnlessCondition(use_slam)
     )
 
@@ -114,6 +138,8 @@ def generate_launch_description():
 
     return LaunchDescription([
         use_slam_arg,
+        serial_port_arg,
+        map_name_arg,
         hardware_interface,
         laser_driver,
         controller,
@@ -121,6 +147,6 @@ def generate_launch_description():
         imu_driver_node,
         localization,
         slam,
-        navigation,
-        # ekf,
+        #navigation,
+        #ekf,
     ])

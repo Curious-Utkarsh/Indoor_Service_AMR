@@ -3,10 +3,10 @@
 <package format="3">
   <name>mobi_firmware</name>
   <version>0.0.0</version>
-  <description>The mobi_firmware package</description>
-  <maintainer email="kutkarsh706@gmail.com">utk</maintainer>
+  <description>Mobi Firmware Package</description>
+  <maintainer email="kutkarsh706@gmail.com">Utkarsh</maintainer>
   <license>Apache 2.0</license>
-  <author email="kutkarsh706@gmail.com">utk</author>
+  <author email="kutkarsh706@gmail.com">Utkarsh</author>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
   <buildtool_depend>ament_cmake_python</buildtool_depend>

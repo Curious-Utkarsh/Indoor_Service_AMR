@@ -22,7 +22,6 @@ def generate_launch_description():
     )
 
     world_name_arg = DeclareLaunchArgument(name="world_name", default_value="empty")
-    is_sim_arg = DeclareLaunchArgument(name="is_sim", default_value="true", description="Flag to indicate simulation mode")
 
     world_path = PathJoinSubstitution([
             mobi_description,
@@ -39,16 +38,10 @@ def generate_launch_description():
         model_path
     )
 
-    ros_distro = os.environ["ROS_DISTRO"]
-    is_ignition = "True" if ros_distro == "humble" else "False"
-
     robot_description = ParameterValue(Command([
             "xacro ",
             LaunchConfiguration("model"),
-            " is_ignition:=",
-            is_ignition,
-            " is_sim:=",
-            LaunchConfiguration("is_sim")
+            " is_sim:=True",
         ]),
         value_type=str
     )
@@ -57,7 +50,7 @@ def generate_launch_description():
         package="robot_state_publisher",
         executable="robot_state_publisher",
         parameters=[{"robot_description": robot_description,
-                     "use_sim_time": LaunchConfiguration("is_sim") }]
+                     "use_sim_time": True}]
     )
 
     gazebo = IncludeLaunchDescription(
@@ -107,7 +100,6 @@ def generate_launch_description():
     return LaunchDescription([
         model_arg,
         world_name_arg,
-        is_sim_arg,
         gazebo_resource_path,
         robot_state_publisher_node,
         gazebo,

@@ -1,15 +1,6 @@
 <?xml version="1.0" ?>
 <sdf version="1.7">
     <world name="empty_world">
-
-        <!-- <model name='Aura_Payload'>
-            <static>false</static>
-            <include>
-                <uri>model://Aura_Payload</uri>
-            </include>
-            <pose frame=''>2.0 1.0 0.15 0 0 0</pose>
-        </model> -->
-
         <light type="directional" name="sun">
             <cast_shadows>true</cast_shadows>
             <pose>0 0 10 0 0 0</pose>

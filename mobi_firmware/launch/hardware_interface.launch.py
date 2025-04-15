@@ -2,11 +2,20 @@ import os
 from launch import LaunchDescription
 from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
-from launch.substitutions import Command
+from launch.substitutions import LaunchConfiguration, Command
+from launch.actions import DeclareLaunchArgument
 from ament_index_python.packages import get_package_share_directory
 
 
 def generate_launch_description():
+
+    serial_port = LaunchConfiguration("serial_port")
+
+    serial_port_arg = DeclareLaunchArgument(
+            "serial_port",
+            default_value="/dev/ttyUSB0",
+            description="Serial port to use RpLidar",
+        ),
 
     robot_description = ParameterValue(
         Command(
@@ -17,7 +26,8 @@ def generate_launch_description():
                     "urdf",
                     "mobi.urdf.xacro",
                 ),
-                " is_sim:=False"
+                " is_sim:=False",
+                " serial_port:=", serial_port,
             ]
         ),
         value_type=str,
@@ -27,6 +37,7 @@ def generate_launch_description():
         package="robot_state_publisher",
         executable="robot_state_publisher",
         parameters=[{"robot_description": robot_description}],
+        output="screen",
     )
 
     controller_manager = Node(
@@ -45,6 +56,7 @@ def generate_launch_description():
 
     return LaunchDescription(
         [
+            serial_port_arg,
             robot_state_publisher_node,
             controller_manager,
         ]
