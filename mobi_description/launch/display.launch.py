@@ -16,14 +16,20 @@ def generate_launch_description():
                                         mobi_description_dir, "urdf", "mobi.urdf.xacro"
                                         ),
                                       description="Absolute path to robot urdf file")
-
-    robot_description = ParameterValue(Command(["xacro ", LaunchConfiguration("model")]),
-                                       value_type=str)
+    
+    robot_description = ParameterValue(Command([
+            "xacro ",
+            LaunchConfiguration("model"),
+            " is_sim:=True",
+        ]),
+        value_type=str
+    )
     
     robot_state_publisher_node = Node(
         package="robot_state_publisher",
         executable="robot_state_publisher",
-        parameters=[{"robot_description": robot_description}]
+        parameters=[{"robot_description": robot_description,
+                     "use_sim_time": True}]
     )
 
     joint_state_publisher_gui_node = Node(

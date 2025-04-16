@@ -1,0 +1,61 @@
+<?xml version="1.0" ?>
+<robot name="mobi" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <link name="rail_link">
+        <inertial>
+            <origin xyz="0.06 0.0 -0.04" rpy="0.0 0.0 0.0"/>
+            <mass value="1.0"/>
+            <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
+        </inertial>
+        <visual>
+            <origin xyz="0.06 0.0 -0.04" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="package://mobi_description/meshes/guide_rail.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="silver"/>
+        </visual>
+        <collision>
+            <origin xyz="0.06 0.0 -0.04" rpy="0.0 0.0 0.0"/> <!--same as joint origin-->
+            <geometry>
+                <box size="0.05 0.15 0.8"/>
+            </geometry>
+        </collision>
+    </link>
+    
+    <joint name="rail_joint" type="fixed">
+        <origin xyz="-0.06 0.0 0.04" rpy="0.0 0.0 0.0"/>
+        <parent link="base_link"/>
+        <child link="rail_link"/>
+    </joint>
+    
+    
+    <link name="chest_link">
+        <inertial>
+            <origin xyz="0.0 0 -0.85" rpy="0.0 0.0 0.0"/>
+            <mass value="1.0"/>
+            <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
+        </inertial>
+        <visual>
+            <origin xyz="0.0 0 -0.85" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="package://mobi_description/meshes/upper_body.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="silver"/>
+        </visual>
+        <collision>
+            <origin xyz="0.0 0 -0.85" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <box size="0.2 0.3 0.4"/>
+            </geometry>
+        </collision>
+    </link>
+    
+    <joint name ="joint_1" type="prismatic"> <!--chest_joint-->
+        <parent link="rail_link"/>
+        <child link = "chest_link"/>
+        <origin xyz="-0.0 0 0.85" rpy="0.0 0.0 0.0"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="-0.315" upper="0.0" effort="30.0" velocity="10.0"/>
+    </joint>
+
+</robot>
