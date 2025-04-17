@@ -60,13 +60,19 @@ def generate_launch_description():
     )
 
 
-    controller = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            os.path.join(
-                get_package_share_directory("mobi_controller"),
-                "launch",
-                "controller.launch.py"
-            )
+    controller_only = IncludeLaunchDescription(
+        os.path.join(
+            get_package_share_directory("mobi_controller"),
+            "launch",
+            "controller.launch.py"
+        ),
+    )
+
+    controller_with_slider = IncludeLaunchDescription(
+        os.path.join(
+            get_package_share_directory("mobi_controller"),
+            "launch",
+            "slider_controller.launch.py"
         ),
     )
 
@@ -142,7 +148,8 @@ def generate_launch_description():
         map_name_arg,
         hardware_interface,
         laser_driver,
-        controller,
+        # controller_only,
+        controller_with_slider,
         joystick,
         imu_driver_node,
         localization,

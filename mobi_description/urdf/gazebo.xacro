@@ -26,19 +26,19 @@
     <gazebo reference="left_castor_wheel">
         <mu1>0.1</mu1>
         <mu2>0.1</mu2>
-        <!-- <kp>1000000.0</kp>
+        <kp>1000000.0</kp>
         <kd>100.0</kd>
         <minDepth>0.001</minDepth>
-        <maxVel>1.0</maxVel> -->
+        <maxVel>1.0</maxVel>
     </gazebo>
 
     <gazebo reference="right_castor_wheel">
         <mu1>0.1</mu1>
         <mu2>0.1</mu2>
-        <!-- <kp>1000000.0</kp>
+        <kp>1000000.0</kp>
         <kd>100.0</kd>
         <minDepth>0.001</minDepth>
-        <maxVel>1.0</maxVel> -->
+        <maxVel>1.0</maxVel>
     </gazebo>
 
 
@@ -59,7 +59,6 @@
 
 
     <!-- Mobi Sensors -->
-
     <!-- IMU -->
     <gazebo reference="imu_link">
         <sensor name="imu" type="imu">

@@ -2,14 +2,20 @@ controller_manager:
   ros__parameters:
     update_rate: 100 # Hz
 
-    mobi_controller:
+    wheel_controller:
       type: diff_drive_controller/DiffDriveController
+
+    rail_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+    neck_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
 
-mobi_controller:
+wheel_controller:
   ros__parameters:
     type        : diff_drive_controller/DiffDriveController
 
@@ -64,6 +70,40 @@ mobi_controller:
         min_acceleration       : -5.0   # rad/s^2
         has_jerk_limits        : false
         max_jerk               : 2.5  # rad/s^3
+
+
+rail_controller:
+  ros__parameters:
+    joints:
+      - joint_1
+
+    command_interfaces:
+      - position
+
+    state_interfaces:
+      - position
+
+    open_loop_control: true
+    allow_integration_in_goal_trajectories: true
+    controller_frequency: 10 #It is very import to add or else things wont work for arms and grippers.
+
+
+neck_controller:
+  ros__parameters:
+    joints:
+      - joint_2
+      - joint_3
+
+    command_interfaces:
+      - position
+
+    state_interfaces:
+      - position
+
+    open_loop_control: true
+    allow_integration_in_goal_trajectories: true
+    controller_frequency: 10
+
 
 
 

@@ -1,5 +1,11 @@
+import os
 from launch import LaunchDescription
+from launch.actions import DeclareLaunchArgument
 from launch_ros.actions import Node
+from launch_ros.parameter_descriptions import ParameterValue
+from launch.substitutions import Command, LaunchConfiguration
+from launch.conditions import UnlessCondition
+from ament_index_python.packages import get_package_share_directory
 
 
 def generate_launch_description():
@@ -17,15 +23,29 @@ def generate_launch_description():
     wheel_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["mobi_controller", 
+        arguments=["wheel_controller", 
                    "--controller-manager", 
                    "/controller_manager"
         ],
+    )
+
+    rail_controller_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["rail_controller", "--controller-manager", "/controller_manager"],
+    )
+
+    neck_controller_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["neck_controller", "--controller-manager", "/controller_manager"],
     )
 
     return LaunchDescription(
         [
             joint_state_broadcaster_spawner,
             wheel_controller_spawner,
+            rail_controller_spawner,
+            neck_controller_spawner,
         ]
     )

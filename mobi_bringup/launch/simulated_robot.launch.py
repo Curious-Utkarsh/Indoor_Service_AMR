@@ -25,7 +25,7 @@ def generate_launch_description():
 
     world_name_arg = DeclareLaunchArgument(
         "world_name",
-        default_value="small_house"
+        default_value="empty"
     )
 
     gazebo = IncludeLaunchDescription(
@@ -39,11 +39,19 @@ def generate_launch_description():
         }.items()
     )
     
-    controller = IncludeLaunchDescription(
+    controller_only = IncludeLaunchDescription(
         os.path.join(
             get_package_share_directory("mobi_controller"),
             "launch",
             "controller.launch.py"
+        ),
+    )
+
+    controller_with_slider = IncludeLaunchDescription( #Use this when slider needed else use above one
+        os.path.join(
+            get_package_share_directory("mobi_controller"),
+            "launch",
+            "slider_controller.launch.py"
         ),
     )
     
@@ -130,18 +138,28 @@ def generate_launch_description():
         ),
         launch_arguments={"use_sim_time": "True"}.items()
     )
+
+    vision = IncludeLaunchDescription( 
+        os.path.join(
+            get_package_share_directory("mobi_vision"),
+            "launch",
+            "vision.launch.py"
+        ),
+    )
     
     return LaunchDescription([
-        use_slam_arg,
-        map_name_arg,
+        # use_slam_arg,
+        # map_name_arg,
         world_name_arg,
         gazebo,
-        controller,
-        joystick,
-        localization,
-        slam,
-        rviz_localization,
-        rviz_slam,
+        controller_only,
+        #controller_with_slider,
+        # joystick,
+        # localization,
+        # slam,
+        # rviz_localization,
+        # rviz_slam,
         # navigation,
-        # ekf
+        # ekf,
+        vision
     ])

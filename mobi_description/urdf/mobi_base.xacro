@@ -50,9 +50,10 @@
             <material name="mud_yellow"/>
         </visual>
         <collision>
-            <origin xyz="-0.17 0.175 -0.06" rpy="0.0 0.0 0.0"/>
+            <origin xyz="-0.0 0.0 -0.0" rpy="0.0 0.0 0.0"/>
             <geometry>
-                <mesh filename="package://mobi_description/meshes/right_wheel.stl" scale="0.001 0.001 0.001"/>
+                <!-- <mesh filename="package://mobi_description/meshes/right_wheel.stl" scale="0.001 0.001 0.001"/> -->
+                <sphere radius="0.06"/>
             </geometry>
         </collision>
     </link>
@@ -79,9 +80,10 @@
             <material name="mud_yellow"/>
         </visual>
         <collision>
-            <origin xyz="-0.169 -0.175 -0.059" rpy="0.0 0.0 0.0"/>
+            <origin xyz="-0.0 -0.0 -0.0" rpy="0.0 0.0 0.0"/>
             <geometry>
-                <mesh filename="package://mobi_description/meshes/left_wheel.stl" scale="0.001 0.001 0.001"/>
+                <!-- <mesh filename="package://mobi_description/meshes/left_wheel.stl" scale="0.001 0.001 0.001"/> -->
+                <sphere radius="0.06"/>
             </geometry>
         </collision>
     </link>
@@ -108,9 +110,10 @@
             <material name="mud_yellow"/>
         </visual>
         <collision>
-            <origin xyz="0.23 -0.15 -0.08" rpy="0.0 0.0 0.0"/>
+            <origin xyz="-0.0 0.0 -0.03" rpy="0.0 0.0 0.0"/>
             <geometry>
-                <mesh filename="package://mobi_description/meshes/castor_left_collision.stl" scale="0.001 0.001 0.001"/>
+                <!-- <mesh filename="package://mobi_description/meshes/castor_left_collision.stl" scale="0.001 0.001 0.001"/> -->
+                <sphere radius="0.05"/>
             </geometry>
         </collision>
     </link>
@@ -135,9 +138,10 @@
             <material name="mud_yellow"/>
         </visual>
         <collision>
-            <origin xyz="0.23 0.15 -0.08" rpy="0.0 0.0 0.0"/>
+            <origin xyz="-0.0 -0.0 -0.03" rpy="0.0 0.0 0.0"/>
             <geometry>
-                <mesh filename="package://mobi_description/meshes/castor_right_collision.stl" scale="0.001 0.001 0.001"/>
+                <!-- <mesh filename="package://mobi_description/meshes/castor_right_collision.stl" scale="0.001 0.001 0.001"/> -->
+                <sphere radius="0.05"/>
             </geometry>
         </collision>
     </link>

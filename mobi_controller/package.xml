@@ -19,6 +19,7 @@
   <depend>tf2_ros</depend>
   <depend>tf2</depend>
   <depend>eigen</depend>
+  <depend>trajectory_msgs</depend>
   
   <exec_depend>tf_transformations</exec_depend>
   <exec_depend>ros2launch</exec_depend>
@@ -30,6 +31,7 @@
   <exec_depend>ros2_controllers</exec_depend>
   <exec_depend>ros2_control</exec_depend>
   <exec_depend>twist_mux</exec_depend>
+  <exec_depend>joint_state_publisher_gui</exec_depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
