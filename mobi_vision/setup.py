@@ -23,6 +23,7 @@ setup(
     entry_points={
         'console_scripts': [
             'face_tracking = mobi_vision.face_tracking:main',
+            'hand_tracking = mobi_vision.hand_tracking:main',
         ],
     },
 )
