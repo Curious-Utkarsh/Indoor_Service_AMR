@@ -23,8 +23,8 @@ amcl:
     odom_frame_id: "odom"
     pf_err: 0.05
     pf_z: 0.99
-    recovery_alpha_fast: 0.0
-    recovery_alpha_slow: 0.0
+    recovery_alpha_fast: 0.1
+    recovery_alpha_slow: 0.001
     resample_interval: 1
     robot_model_type: "nav2_amcl::DifferentialMotionModel"
     save_pose_rate: 0.5
@@ -44,7 +44,7 @@ bt_navigator:
     use_sim_time: True
     global_frame: map
     robot_base_frame: base_link
-    odom_topic: /mobi_controller/odom  #/odometry/filtered 
+    odom_topic: /wheel_controller/odom  #/odometry/filtered 
     bt_loop_duration: 10
     default_server_timeout: 20
     wait_for_service_timeout: 1000
@@ -130,52 +130,52 @@ controller_server:
     # Goal checker parameters
     precise_goal_checker:
      plugin: "nav2_controller::SimpleGoalChecker"
-     xy_goal_tolerance: 0.15
-     yaw_goal_tolerance: 0.35
+     xy_goal_tolerance: 0.10
+     yaw_goal_tolerance: 0.25
      stateful: True
     # general_goal_checker:
     #   stateful: True
     #   plugin: "nav2_controller::SimpleGoalChecker"
-    #   xy_goal_tolerance: 0.15
-    #   yaw_goal_tolerance: 0.35
+    #   xy_goal_tolerance: 0.10
+    #   yaw_goal_tolerance: 0.25
     # DWB parameters
     FollowPath:
       plugin: "dwb_core::DWBLocalPlanner"
       debug_trajectory_details: True
       min_vel_x: 0.0
       min_vel_y: 0.0
-      max_vel_x: 0.7
+      max_vel_x: 2.0
       max_vel_y: 0.0
-      max_vel_theta: 2.0 #might increase this slowly
+      max_vel_theta: 3.0 #might increase this slowly
       min_speed_xy: 0.0
-      max_speed_xy: 0.7
+      max_speed_xy: 2.0
       min_speed_theta: 0.0
-      acc_lim_x: 0.7
+      acc_lim_x: 0.7 
       acc_lim_y: 0.0
-      acc_lim_theta: 5.0
+      acc_lim_theta: 5.0 #might increase this as well, if bot is not snappy at turns.
       decel_lim_x: 0.7
       decel_lim_y: 0.0
       decel_lim_theta: 5.0
-      vx_samples: 20
+      vx_samples: 30
       vy_samples: 5
-      vtheta_samples: 20
-      sim_time: 1.7
-      linear_granularity: 0.05
-      angular_granularity: 0.025
+      vtheta_samples: 30
+      sim_time: 1.0 #1.7
+      linear_granularity: 0.02
+      angular_granularity: 0.01
       transform_tolerance: 0.2
-      xy_goal_tolerance: 0.15
+      xy_goal_tolerance: 0.10
       trans_stopped_velocity: 0.05 #0.25
       short_circuit_trajectory_evaluation: True
       stateful: True
       critics: ["RotateToGoal", "Oscillation", "BaseObstacle", "GoalAlign", "PathAlign", "PathDist", "GoalDist"]
-      BaseObstacle.scale: 0.02
-      PathAlign.scale: 32.0
-      PathAlign.forward_point_distance: 0.1
-      GoalAlign.scale: 24.0
-      GoalAlign.forward_point_distance: 0.1
-      PathDist.scale: 32.0
-      GoalDist.scale: 24.0
-      RotateToGoal.scale: 32.0
+      BaseObstacle.scale: 0.01
+      PathAlign.scale: 16.0
+      PathAlign.forward_point_distance: 0.05
+      GoalAlign.scale: 12.0
+      GoalAlign.forward_point_distance: 0.05
+      PathDist.scale: 16.0
+      GoalDist.scale: 12.0
+      RotateToGoal.scale: 16.0
       RotateToGoal.slowing_factor: 5.0
       RotateToGoal.lookahead_time: -1.0
 
@@ -191,12 +191,12 @@ local_costmap:
       width: 3
       height: 3
       resolution: 0.05
-      robot_radius: 0.6 #0.38
+      robot_radius: 0.38    
       plugins: ["voxel_layer", "inflation_layer"]
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 2.0
-        inflation_radius: 0.8
+        inflation_radius: 0.1
       voxel_layer:
         plugin: "nav2_costmap_2d::VoxelLayer"
         enabled: True
@@ -230,7 +230,7 @@ global_costmap:
       global_frame: map
       robot_base_frame: base_link
       use_sim_time: True
-      robot_radius: 0.6 #0.38
+      robot_radius: 0.38
       resolution: 0.05
       track_unknown_space: true
       plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
@@ -254,7 +254,7 @@ global_costmap:
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 2.0
-        inflation_radius: 0.8
+        inflation_radius: 0.1
       always_send_full_costmap: True
 
 map_server:
@@ -312,8 +312,8 @@ behavior_server:
     transform_tolerance: 0.1
     use_sim_time: true
     simulate_ahead_time: 2.0
-    max_rotational_vel: 8.5
-    min_rotational_vel: 0.5
+    max_rotational_vel: 3.0 #Might Consider changing
+    min_rotational_vel: 0.2 #Might Consider changing, do antonio cousre and get to know.
     rotational_acc_lim: 5.0
 
 robot_state_publisher:
@@ -337,11 +337,11 @@ velocity_smoother: #Might consider changing these velocities according to real r
     smoothing_frequency: 20.0
     scale_velocities: False
     feedback: "OPEN_LOOP"
-    max_velocity: [0.7, 0.0, 2.0] #x,y, yaw
-    min_velocity: [-0.7, 0.0, -2.0]
+    max_velocity: [2.0, 0.0, 3.0] #x,y, yaw
+    min_velocity: [-2.0, 0.0, -3.0]
     max_accel: [0.7, 0.0, 5.0] #x acc, y acc, yaw acc, might need to increase or change x and yaw acc.
     max_decel: [0.7, 0.0, 5.0]
-    odom_topic:  "/mobi_controller/odom"  #"/odometry/filtered"
+    odom_topic:  "/wheel_controller/odom"  #"/odometry/filtered"
     odom_duration: 0.05
     deadband_velocity: [0.0, 0.0, 0.0]
     velocity_timeout: 1.0

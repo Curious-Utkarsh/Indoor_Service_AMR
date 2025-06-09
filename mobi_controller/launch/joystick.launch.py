@@ -1,5 +1,8 @@
 import os
+
 from ament_index_python.packages import get_package_share_directory
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
@@ -30,19 +33,24 @@ def generate_launch_description():
                     {"use_sim_time": LaunchConfiguration("use_sim_time")}]
     )
     
+
     twist_mux_launch = IncludeLaunchDescription(
-        os.path.join(
-            get_package_share_directory("twist_mux"),
-            "launch",
-            "twist_mux_launch.py"
+        PythonLaunchDescriptionSource(
+            os.path.join(
+                get_package_share_directory("twist_mux"),
+                "launch",
+                "twist_mux_launch.py"
+            )
         ),
         launch_arguments={
-            "cmd_vel_out": "mobi_controller/cmd_vel_unstamped",
-            "config_topics": os.path.join(mobi_controller_pkg, "config", "twist_mux_topics.yaml"),
-            "config_joy": os.path.join(mobi_controller_pkg, "config", "twist_mux_joy.yaml"),
-            "use_sim_time": LaunchConfiguration("use_sim_time"),
+        "cmd_vel_out":   "wheel_controller/cmd_vel_unstamped",    
+        "config_locks":  os.path.join(mobi_controller_pkg, "config", "twist_mux_locks.yaml"),  #Dont comment this line, or else twist mux doesnot work
+        "config_topics": os.path.join(mobi_controller_pkg, "config", "twist_mux_topics.yaml"),
+        "config_joy":    os.path.join(mobi_controller_pkg, "config", "twist_mux_joy.yaml"),
+        "use_sim_time":  LaunchConfiguration("use_sim_time"),
         }.items(),
     )
+
 
     return LaunchDescription(
         [

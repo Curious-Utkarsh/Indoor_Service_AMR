@@ -20,7 +20,7 @@ def generate_launch_description():
 
     serial_port_arg = DeclareLaunchArgument(
         "serial_port",
-        default_value="/dev/ttyUSB0",
+        default_value="/dev/ttyUSB0", #By Default Lidar USB 0 kiya hua hai, if doesnot work then give arg as usb1, internal chnages will happen.
         description="Serial port for RPLIDAR"
     )
 
@@ -143,17 +143,17 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
-        use_slam_arg,
+        # use_slam_arg,
         serial_port_arg,
-        map_name_arg,
+        # map_name_arg,
         hardware_interface,
         laser_driver,
-        # controller_only,
-        controller_with_slider,
-        joystick,
+        controller_only,
+        # controller_with_slider,
+        # joystick,
         imu_driver_node,
-        localization,
-        slam,
+        # localization,
+        # slam,
         #navigation,
         #ekf,
     ])

@@ -29,23 +29,23 @@ def generate_launch_description():
         ],
     )
 
-    rail_controller_spawner = Node(
-        package="controller_manager",
-        executable="spawner",
-        arguments=["rail_controller", "--controller-manager", "/controller_manager"],
-    )
+    # rail_controller_spawner = Node(
+    #     package="controller_manager",
+    #     executable="spawner",
+    #     arguments=["rail_controller", "--controller-manager", "/controller_manager"],
+    # )
 
-    neck_controller_spawner = Node(
-        package="controller_manager",
-        executable="spawner",
-        arguments=["neck_controller", "--controller-manager", "/controller_manager"],
-    )
+    # neck_controller_spawner = Node(
+    #     package="controller_manager",
+    #     executable="spawner",
+    #     arguments=["neck_controller", "--controller-manager", "/controller_manager"],
+    # )
 
     return LaunchDescription(
         [
             joint_state_broadcaster_spawner,
             wheel_controller_spawner,
-            rail_controller_spawner,
-            neck_controller_spawner,
+            # rail_controller_spawner,
+            # neck_controller_spawner,
         ]
     )

@@ -1,15 +1,15 @@
 #include <PID_v1.h>
 // Motor Driver Pins
-#define LEFT_MOTOR_DIR_PIN   0 
-#define LEFT_MOTOR_PWM_PIN   4
-#define RIGHT_MOTOR_DIR_PIN  15
-#define RIGHT_MOTOR_PWM_PIN  2
+#define LEFT_MOTOR_DIR_PIN   4
+#define LEFT_MOTOR_PWM_PIN   15
+#define RIGHT_MOTOR_DIR_PIN  23
+#define RIGHT_MOTOR_PWM_PIN  22
 
 // Motor Encoder Pins
 #define LEFT_ENCODER_A_PIN   17 
 #define LEFT_ENCODER_B_PIN   16  
 #define RIGHT_ENCODER_A_PIN  18
-#define RIGHT_ENCODER_B_PIN   5 
+#define RIGHT_ENCODER_B_PIN   5
 
 #define MOTOR_SPEED 100 //30RPM at 100 value, donot increase more than 100.
 
@@ -46,10 +46,10 @@ double left_wheel_meas_vel = 0.0;     // rad/s
 double right_wheel_cmd = 0.0;             // 0-255
 double left_wheel_cmd = 0.0;              // 0-255
 // Tuning
-double Kp_r = 10.0;
+double Kp_r = 8.0; //10.0
 double Ki_r = 7.0;
 double Kd_r = 0.1;
-double Kp_l = 10.0;
+double Kp_l = 8.0; //10.0
 double Ki_l = 7.0;
 double Kd_l = 0.1;
 // Controller

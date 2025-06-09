@@ -2,7 +2,7 @@
 <robot name="mobi" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
     <!-- Load Simulated or Real Hardware Interfaces -->
-    <xacro:arg name="is_sim" default="true"/> <!-- Getting passed as false in hardware interface launch file-->
+    <xacro:arg name="is_sim" default="true"/> <!-- Overridden by hardware.launch -->
     <xacro:arg name="serial_port" default="/dev/ttyUSB0"/>
 
 
@@ -22,7 +22,7 @@
             <material name="silver"/>
         </visual>
         <collision>
-            <origin xyz="0.0 0.0 -0.0" rpy="0.0 0.0 0.0"/>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
             <geometry>
                 <mesh filename="package://mobi_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
             </geometry>
@@ -38,19 +38,19 @@
 
     <link name="right_wheel">
         <inertial>
-            <origin xyz="-0.17 0.175 -0.06" rpy="0.0 0.0 0.0"/>
+            <origin xyz="-0.0 0.2275 -0.06" rpy="0.0 0.0 0.0"/>
             <mass value="1.0"/>
             <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
         </inertial>
         <visual>
-            <origin xyz="-0.17 0.175 -0.06" rpy="0.0 0.0 0.0"/>
+            <origin xyz="-0.0 0.2275 -0.06" rpy="0.0 0.0 0.0"/>
             <geometry>
                 <mesh filename="package://mobi_description/meshes/right_wheel.stl" scale="0.001 0.001 0.001"/>
             </geometry>
             <material name="mud_yellow"/>
         </visual>
         <collision>
-            <origin xyz="-0.0 0.0 -0.0" rpy="0.0 0.0 0.0"/>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
             <geometry>
                 <!-- <mesh filename="package://mobi_description/meshes/right_wheel.stl" scale="0.001 0.001 0.001"/> -->
                 <sphere radius="0.06"/>
@@ -59,28 +59,28 @@
     </link>
 
     <joint name="right_wheel_joint" type="continuous">
-        <origin xyz="0.17 -0.175 0.06" rpy="0.0 0.0 0.0"/>
+        <origin xyz="0.0 -0.2275 0.06" rpy="0.0 0.0 0.0"/>
         <parent link="base_link"/>
         <child link="right_wheel"/>
-        <axis xyz="-0.0 1.0 0.0"/>
+        <axis xyz="0.0 1.0 0.0"/>
     </joint>
 
 
     <link name="left_wheel">
         <inertial>
-            <origin xyz="-0.169 -0.175 -0.059" rpy="0.0 0.0 0.0"/>
+            <origin xyz="-0.0 -0.2275 -0.06" rpy="0.0 0.0 0.0"/>
             <mass value="1.0"/>
             <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
         </inertial>
         <visual>
-            <origin xyz="-0.169 -0.175 -0.059" rpy="0.0 0.0 0.0"/>
+            <origin xyz="-0.0 -0.2275 -0.06" rpy="0.0 0.0 0.0"/>
             <geometry>
                 <mesh filename="package://mobi_description/meshes/left_wheel.stl" scale="0.001 0.001 0.001"/>
             </geometry>
             <material name="mud_yellow"/>
         </visual>
         <collision>
-            <origin xyz="-0.0 -0.0 -0.0" rpy="0.0 0.0 0.0"/>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
             <geometry>
                 <!-- <mesh filename="package://mobi_description/meshes/left_wheel.stl" scale="0.001 0.001 0.001"/> -->
                 <sphere radius="0.06"/>
@@ -89,28 +89,28 @@
     </link>
 
     <joint name="left_wheel_joint" type="continuous">
-        <origin xyz="0.169 0.175 0.059" rpy="0.0 0.0 0.0"/>
+        <origin xyz="0.0 0.2275 0.06" rpy="0.0 0.0 0.0"/>
         <parent link="base_link"/>
         <child link="left_wheel"/>
-        <axis xyz="-0.0 1.0 0.0"/>
+        <axis xyz="0.0 1.0 0.0"/>
     </joint>
 
 
-    <link name="left_castor_wheel">
+    <link name="front_left_castor_wheel">
         <inertial>
-            <origin xyz="0.23 -0.15 -0.08" rpy="0.0 0.0 0.0"/>
+            <origin xyz="-0.22 -0.24 -0.08" rpy="0.0 0.0 0.0"/>
             <mass value="1.0"/>
             <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
         </inertial>
         <visual>
-            <origin xyz="0.23 -0.15 -0.08" rpy="0.0 0.0 0.0"/>
+            <origin xyz="-0.22 -0.24 -0.08" rpy="0.0 0.0 0.0"/>
             <geometry>
-                <mesh filename="package://mobi_description/meshes/castor_left.stl" scale="0.001 0.001 0.001"/>
+                <mesh filename="package://mobi_description/meshes/fl_castor.stl" scale="0.001 0.001 0.001"/>
             </geometry>
             <material name="mud_yellow"/>
         </visual>
         <collision>
-            <origin xyz="-0.0 0.0 -0.03" rpy="0.0 0.0 0.0"/>
+            <origin xyz="0.0 0.0 -0.03" rpy="0.0 0.0 0.0"/>
             <geometry>
                 <!-- <mesh filename="package://mobi_description/meshes/castor_left_collision.stl" scale="0.001 0.001 0.001"/> -->
                 <sphere radius="0.05"/>
@@ -118,27 +118,27 @@
         </collision>
     </link>
 
-    <joint name="left_castor_joint" type="fixed">
-        <origin xyz="-0.23 0.15 0.08" rpy="0.0 0.0 0.0"/>
+    <joint name="front_left_castor_joint" type="fixed">
+        <origin xyz="0.22 0.24 0.08" rpy="0.0 0.0 0.0"/>
         <parent link="base_link"/>
-        <child link="left_castor_wheel"/>
+        <child link="front_left_castor_wheel"/>
     </joint>
 
-    <link name="right_castor_wheel">
+    <link name="front_right_castor_wheel">
         <inertial>
-            <origin xyz="0.23 0.15 -0.08" rpy="0.0 0.0 0.0"/>
+            <origin xyz="-0.22 0.24 -0.08" rpy="0.0 0.0 0.0"/>
             <mass value="1.0"/>
             <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
         </inertial>
         <visual>
-            <origin xyz="0.23 0.15 -0.08" rpy="0.0 0.0 0.0"/>
+            <origin xyz="-0.22 0.24 -0.08" rpy="0.0 0.0 0.0"/>
             <geometry>
-                <mesh filename="package://mobi_description/meshes/castor_right.stl" scale="0.001 0.001 0.001"/>
+                <mesh filename="package://mobi_description/meshes/fr_castor.stl" scale="0.001 0.001 0.001"/>
             </geometry>
             <material name="mud_yellow"/>
         </visual>
         <collision>
-            <origin xyz="-0.0 -0.0 -0.03" rpy="0.0 0.0 0.0"/>
+            <origin xyz="0.0 0.0 -0.03" rpy="0.0 0.0 0.0"/>
             <geometry>
                 <!-- <mesh filename="package://mobi_description/meshes/castor_right_collision.stl" scale="0.001 0.001 0.001"/> -->
                 <sphere radius="0.05"/>
@@ -146,10 +146,66 @@
         </collision>
     </link>
 
-    <joint name="right_castor_joint" type="fixed">
-        <origin xyz="-0.23 -0.15 0.08" rpy="0.0 0.0 0.0"/>
+    <joint name="front_right_castor_joint" type="fixed">
+        <origin xyz="0.22 -0.24 0.08" rpy="0.0 0.0 0.0"/>
         <parent link="base_link"/>
-        <child link="right_castor_wheel"/>
+        <child link="front_right_castor_wheel"/>
+    </joint>
+
+    <link name="back_left_castor_wheel">
+        <inertial>
+            <origin xyz="0.22 -0.24 -0.08" rpy="0.0 0.0 0.0"/>
+            <mass value="1.0"/>
+            <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
+        </inertial>
+        <visual>
+            <origin xyz="0.22 -0.24 -0.08" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="package://mobi_description/meshes/bl_castor.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="mud_yellow"/>
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 -0.03" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <!-- <mesh filename="package://mobi_description/meshes/castor_left_collision.stl" scale="0.001 0.001 0.001"/> -->
+                <sphere radius="0.05"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="back_left_castor_joint" type="fixed">
+        <origin xyz="-0.22 0.24 0.08" rpy="0.0 0.0 0.0"/>
+        <parent link="base_link"/>
+        <child link="back_left_castor_wheel"/>
+    </joint>
+
+    <link name="back_right_castor_wheel">
+        <inertial>
+            <origin xyz="0.22 0.24 -0.08" rpy="0.0 0.0 0.0"/>
+            <mass value="1.0"/>
+            <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
+        </inertial>
+        <visual>
+            <origin xyz="0.22 0.24 -0.08" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="package://mobi_description/meshes/br_castor.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="mud_yellow"/>
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 -0.03" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <!-- <mesh filename="package://mobi_description/meshes/castor_right_collision.stl" scale="0.001 0.001 0.001"/> -->
+                <sphere radius="0.05"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="back_right_castor_joint" type="fixed">
+        <origin xyz="-0.22 -0.24 0.08" rpy="0.0 0.0 0.0"/>
+        <parent link="base_link"/>
+        <child link="back_right_castor_wheel"/>
     </joint>
 
 </robot>

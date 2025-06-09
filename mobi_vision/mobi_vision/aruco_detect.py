@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import cv2 #version  opencv-contrib-python==4.7.0.72 req. for aruco detection to work.
 import numpy as np #version 1.25.0 req.
 

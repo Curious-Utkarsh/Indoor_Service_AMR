@@ -25,7 +25,7 @@ def generate_launch_description():
 
     world_name_arg = DeclareLaunchArgument(
         "world_name",
-        default_value="empty"
+        default_value="small_house"
     )
 
     gazebo = IncludeLaunchDescription(
@@ -56,14 +56,14 @@ def generate_launch_description():
     )
     
     joystick = IncludeLaunchDescription(
-        os.path.join(
-            get_package_share_directory("mobi_controller"),
-            "launch",
-            "joystick.launch.py"
+        PythonLaunchDescriptionSource(
+            os.path.join(
+                get_package_share_directory("mobi_controller"),
+                "launch",
+                "joystick.launch.py"
+            )
         ),
-        launch_arguments={
-            "use_sim_time": "True"
-        }.items()
+        launch_arguments={"use_sim_time": "True"}.items()
     )
 
     localization = IncludeLaunchDescription(
@@ -148,18 +148,18 @@ def generate_launch_description():
     )
     
     return LaunchDescription([
-        # use_slam_arg,
-        # map_name_arg,
+        use_slam_arg,
+        map_name_arg,
         world_name_arg,
         gazebo,
         controller_only,
         #controller_with_slider,
-        # joystick,
-        # localization,
-        # slam,
-        # rviz_localization,
-        # rviz_slam,
-        # navigation,
+        joystick,
+        localization,
+        slam,
+        rviz_localization,
+        rviz_slam,
+        navigation,
         # ekf,
-        vision
+        # vision,
     ])

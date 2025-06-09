@@ -9,9 +9,12 @@ setup(
     version='0.0.1',
     packages=find_packages(include=[package_name, f"{package_name}.*"]),
     data_files=[
+        # Install package manifest
         (f'share/{package_name}', ['package.xml']),
+        # Ament index marker for rost2-colcon indexing
+        ('share/ament_index/resource_index/packages', [f'resource/{package_name}']),
+        # Launch files
         (os.path.join('share', package_name, 'launch'), glob('launch/*.launch.py')),
-        # Add other data files as needed
     ],
     install_requires=['setuptools'],
     zip_safe=True,

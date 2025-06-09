@@ -6,7 +6,7 @@
     <xacro:include filename="$(find mobi_description)/urdf/ros2_control.xacro" />
     <xacro:include filename="$(find mobi_description)/urdf/mobi_base.xacro" />
     <xacro:include filename="$(find mobi_description)/urdf/mobi_sensors.xacro" />
-    <xacro:include filename="$(find mobi_description)/urdf/mobi_rail.xacro" />
-    <xacro:include filename="$(find mobi_description)/urdf/mobi_head.xacro" />
+    <!-- <xacro:include filename="$(find mobi_description)/urdf/mobi_rail.xacro" /> -->
+    <!-- <xacro:include filename="$(find mobi_description)/urdf/mobi_head.xacro" /> -->
 
 </robot>

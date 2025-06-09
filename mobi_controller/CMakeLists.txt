@@ -12,15 +12,22 @@ find_package(tf2_ros REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(trajectory_msgs REQUIRED)
+find_package(twist_mux_msgs REQUIRED)
+find_package(rclcpp_action REQUIRED)
+find_package(visualization_msgs REQUIRED)
 
 add_executable(slider_control src/slider_control.cpp)
 ament_target_dependencies(slider_control rclcpp trajectory_msgs sensor_msgs)
+
+# add_executable(safety_stop src/safety_stop.cpp)
+# ament_target_dependencies(safety_stop rclcpp std_msgs sensor_msgs geometry_msgs twist_mux_msgs rclcpp_action visualization_msgs)
 
 include_directories(include)
 include_directories(${EIGEN3_INCLUDE_DIR})
 
 install(TARGETS
   slider_control
+  # safety_stop
   DESTINATION lib/${PROJECT_NAME}
 )
 

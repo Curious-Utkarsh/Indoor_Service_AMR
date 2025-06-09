@@ -5,11 +5,11 @@ controller_manager:
     wheel_controller:
       type: diff_drive_controller/DiffDriveController
 
-    rail_controller:
-      type: joint_trajectory_controller/JointTrajectoryController
+    # rail_controller:
+    #   type: joint_trajectory_controller/JointTrajectoryController
 
-    neck_controller:
-      type: joint_trajectory_controller/JointTrajectoryController
+    # neck_controller:
+    #   type: joint_trajectory_controller/JointTrajectoryController
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
@@ -17,7 +17,7 @@ controller_manager:
 
 wheel_controller:
   ros__parameters:
-    type        : diff_drive_controller/DiffDriveController
+    type: diff_drive_controller/DiffDriveController
 
     use_stamped_vel: false
     
@@ -26,8 +26,8 @@ wheel_controller:
 
     publish_rate: 50.0               # default: 50
 
-    wheel_separation : 0.35
-    wheel_radius : 0.12
+    wheel_separation : 0.455
+    wheel_radius : 0.06 #Its radius not dia. so r = dia/2 which is 0.12/2 = 0.06
 
     wheel_separation_multiplier: 1.0
     left_wheel_radius_multiplier: 1.0
@@ -53,8 +53,8 @@ wheel_controller:
     linear:
       x:
         has_velocity_limits    : true
-        max_velocity           : 0.7  # m/s
-        min_velocity           : -0.7 # m/s
+        max_velocity           : 2.0  # m/s
+        min_velocity           : -2.0 # m/s
         has_acceleration_limits: true
         max_acceleration       : 0.7  # m/s^2
         min_acceleration       : -0.7 # m/s^2
@@ -63,8 +63,8 @@ wheel_controller:
     angular:
       z:
         has_velocity_limits    : true
-        max_velocity           : 2.0  # rad/s
-        min_velocity           : -2.0  # rad/s
+        max_velocity           : 3.0  # rad/s
+        min_velocity           : -3.0  # rad/s
         has_acceleration_limits: true
         max_acceleration       : 5.0  # rad/s^2
         min_acceleration       : -5.0   # rad/s^2
@@ -72,37 +72,37 @@ wheel_controller:
         max_jerk               : 2.5  # rad/s^3
 
 
-rail_controller:
-  ros__parameters:
-    joints:
-      - joint_1
+# rail_controller:
+#   ros__parameters:
+#     joints:
+#       - joint_1
 
-    command_interfaces:
-      - position
+#     command_interfaces:
+#       - position
 
-    state_interfaces:
-      - position
+#     state_interfaces:
+#       - position
 
-    open_loop_control: true
-    allow_integration_in_goal_trajectories: true
-    controller_frequency: 10 #It is very import to add or else things wont work for arms and grippers.
+#     open_loop_control: true
+#     allow_integration_in_goal_trajectories: true
+#     controller_frequency: 10 #It is very import to add or else things wont work for arms and grippers.
 
 
-neck_controller:
-  ros__parameters:
-    joints:
-      - joint_2
-      - joint_3
+# neck_controller:
+#   ros__parameters:
+#     joints:
+#       - joint_2
+#       - joint_3
 
-    command_interfaces:
-      - position
+#     command_interfaces:
+#       - position
 
-    state_interfaces:
-      - position
+#     state_interfaces:
+#       - position
 
-    open_loop_control: true
-    allow_integration_in_goal_trajectories: true
-    controller_frequency: 10
+#     open_loop_control: true
+#     allow_integration_in_goal_trajectories: true
+#     controller_frequency: 10
 
 
 
