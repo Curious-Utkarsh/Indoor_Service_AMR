@@ -148,8 +148,8 @@
                     </horizontal>
                 </scan>
                 <range>
-                    <min>0.120000</min>
-                    <max>12.0</max>
+                    <min>0.400000</min> <!-- Done this much to prevent robot rod obstruction-->
+                    <max>12.0</max> <!-- Might consider changing according to real lidar values-->
                     <resolution>0.02</resolution>
                 </range>
                 <noise>

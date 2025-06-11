@@ -54,7 +54,8 @@ def generate_launch_description():
             "frame_id": "laser_link",
             "inverted": False,
             "angle_compensate": True,
-            "scan_mode": "Sensitivity"
+            "scan_mode": "Sensitivity",
+            "range_min": 0.40
         }],
         output="screen"
     )
@@ -143,7 +144,7 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
-        # use_slam_arg,
+        use_slam_arg,
         serial_port_arg,
         # map_name_arg,
         hardware_interface,
@@ -153,7 +154,7 @@ def generate_launch_description():
         # joystick,
         imu_driver_node,
         # localization,
-        # slam,
+        slam,
         #navigation,
         #ekf,
     ])
