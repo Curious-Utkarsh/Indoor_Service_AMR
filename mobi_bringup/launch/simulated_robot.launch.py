@@ -25,7 +25,7 @@ def generate_launch_description():
 
     world_name_arg = DeclareLaunchArgument(
         "world_name",
-        default_value="small_house"
+        default_value="empty" #Change this when using slam
     )
 
     gazebo = IncludeLaunchDescription(
@@ -148,18 +148,18 @@ def generate_launch_description():
     )
     
     return LaunchDescription([
-        use_slam_arg,
-        map_name_arg,
+        # use_slam_arg,
+        # map_name_arg,
         world_name_arg,
         gazebo,
         controller_only,
         #controller_with_slider,
         joystick,
-        localization,
-        slam,
-        rviz_localization,
-        rviz_slam,
-        navigation,
+        # localization,
+        # slam,
+        # rviz_localization,
+        # rviz_slam,
+        # navigation,
         # ekf,
         # vision,
     ])

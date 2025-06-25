@@ -3,19 +3,19 @@
 
     <link name="laser_link">
         <inertial>
-            <origin xyz="0.013 0.0 -0.23" rpy="0.0 0.0 0.0"/>
+            <origin xyz="0.015 0.0 -0.23" rpy="0.0 0.0 0.0"/>
             <mass value="0.5"/>
             <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
         </inertial>
         <visual>
-            <origin xyz="0.013 0.0 -0.23" rpy="0.0 0.0 0.0"/>
+            <origin xyz="0.015 0.0 -0.23" rpy="0.0 0.0 0.0"/>
             <geometry>
                 <mesh filename="package://mobi_description/meshes/lidar.stl" scale="0.001 0.001 0.001"/>
             </geometry>
             <material name="matte_brown"/>
         </visual>
         <collision>
-            <origin xyz="0.013 0.0 -0.23" rpy="0.0 0.0 0.0"/>
+            <origin xyz="0.015 0.0 -0.23" rpy="0.0 0.0 0.0"/>
             <geometry>
                 <mesh filename="package://mobi_description/meshes/lidar.stl" scale="0.001 0.001 0.001"/> <!--Kepp it as it is-->
             </geometry>
@@ -23,7 +23,7 @@
     </link>
     
     <joint name="laser_joint" type="fixed">
-        <origin xyz="-0.013 0.0 0.23" rpy="0.0 0.0 0.0"/>
+        <origin xyz="-0.15 0.0 0.23" rpy="0.0 0.0 0.0"/>
         <parent link="base_link"/>
         <child link="laser_link"/>
     </joint>
@@ -51,7 +51,7 @@
     </link>
     
     <joint name="camera_joint" type="fixed">
-        <origin xyz="0.25 0.0 0.32" rpy="0.0 0.0 0.0"/>
+        <origin xyz="0.108 0.0 0.32" rpy="0.0 0.0 0.0"/>
         <parent link="base_link"/>
         <child link="camera_link"/>
     </joint>
@@ -94,19 +94,19 @@
 
     <link name="ultrasonic_link">
         <inertial>
-            <origin xyz="-0.22 0.0 -0.12" rpy="0.0 0.0 0.0"/>
+            <origin xyz="-0.25 0.0 -0.12" rpy="0.0 0.0 0.0"/>
             <mass value="0.1"/>
             <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
         </inertial>
         <visual>
-            <origin xyz="-0.22 0.0 -0.12" rpy="0.0 0.0 0.0"/>
+            <origin xyz="-0.25 0.0 -0.12" rpy="0.0 0.0 0.0"/>
             <geometry>
                 <mesh filename="package://mobi_description/meshes/ultrasonic.stl" scale="0.001 0.001 0.001"/>
             </geometry>
             <material name="silver"/>
         </visual>
         <collision>
-            <origin xyz="-0.22 0.0 -0.12" rpy="0.0 0.0 0.0"/>
+            <origin xyz="-0.25 0.0 -0.12" rpy="0.0 0.0 0.0"/>
             <geometry>
                 <mesh filename="package://mobi_description/meshes/ultrasonic.stl" scale="0.001 0.001 0.001"/>
             </geometry>
@@ -114,7 +114,7 @@
     </link>
     
     <joint name="ultrasonic_joint" type="fixed">
-        <origin xyz="0.22 0.0 0.12" rpy="0.0 0.0 0.0"/>
+        <origin xyz="0.105 0.0 0.12" rpy="0.0 0.0 0.0"/>
         <parent link="base_link"/>
         <child link="ultrasonic_link"/>
     </joint>
