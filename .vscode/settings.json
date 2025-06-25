@@ -7,4 +7,11 @@
         "/opt/ros/humble/lib/python3.10/site-packages",
         "/opt/ros/humble/local/lib/python3.10/dist-packages"
     ]
+
+    // ── Arduino CLI settings, Use in Pi-Robot Only, not on Local PC ---
+    // "arduino.useArduinoCli": true,
+    // "arduino.commandPath": "arduino-cli",
+    // "arduino.defaultBaudRate": 115200,
+    // "arduino.board": "esp32:esp32:esp32",
+    // "arduino.port": "/dev/ttyUSB0"
 }

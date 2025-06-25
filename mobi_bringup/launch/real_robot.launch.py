@@ -151,7 +151,7 @@ def generate_launch_description():
         laser_driver,
         controller_only,
         # controller_with_slider,
-        # joystick,
+        joystick,
         imu_driver_node,
         # localization,
         slam,
