@@ -6,146 +6,179 @@ import time
 import subprocess
 from PyQt5.QtWidgets import (
     QApplication, QMainWindow, QWidget, QLabel, QPushButton,
-    QHBoxLayout, QVBoxLayout, QSizePolicy, QGraphicsDropShadowEffect
+    QComboBox, QGroupBox, QHBoxLayout, QVBoxLayout, QSizePolicy
 )
-from PyQt5.QtGui import QFont, QColor
+from PyQt5.QtGui import QFont, QCursor
 from PyQt5.QtCore import Qt
 
 class LauncherWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle('Mobi Robot Launcher')
-        self.setFixedSize(600, 500)
-        central_widget = QWidget(self)
-        central_widget.setStyleSheet('background-color: #f5f5f5;')
-        self.setCentralWidget(central_widget)
+        # Window title
+        self.setWindowTitle('Robot Launcher')
+        # Fixed window size
+        self.setFixedSize(900, 600)
 
-        main_layout = QVBoxLayout(central_widget)
-        main_layout.setContentsMargins(30, 30, 30, 30)
+        # Central widget
+        central = QWidget()
+        central.setStyleSheet('background-color: #f0f0f0;')
+        self.setCentralWidget(central)
+
+        # Main layout
+        main_layout = QHBoxLayout(central)
+        main_layout.setContentsMargins(20, 20, 20, 20)
         main_layout.setSpacing(20)
 
-        # Title
-        title = QLabel('Mobi Robot Launcher', self)
-        title_font = QFont('Arial', 24, QFont.Bold)
-        title.setFont(title_font)
-        title.setAlignment(Qt.AlignCenter)
-        title.setStyleSheet('color: #333333;')
-        main_layout.addWidget(title)
+        # Real Robot Section
+        real_group = QGroupBox('Real Robot')
+        real_group.setFont(QFont('Arial', 18, QFont.Bold))
+        real_group.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        real_group.setStyleSheet(
+            "QGroupBox { background-color: #ffffff; border: 1px solid #cccccc; border-radius: 5px; margin-top: 20px; }"
+            "QGroupBox::title { subcontrol-origin: margin; subcontrol-position: top left; padding: 0 5px; color: #000000; }")
+        real_layout = QVBoxLayout()
+        real_layout.setContentsMargins(15, 30, 15, 15)
+        real_layout.setSpacing(10)
 
-        # Launch buttons
-        button_layout = QHBoxLayout()
-        button_layout.setSpacing(40)
+        # Real parameters
+        for label, items, attr in [
+            ('Use SLAM', ['true','false'], 'real_slam'),
+            ('Serial Port', ['/dev/ttyUSB0','/dev/ttyUSB1'], 'real_serial'),
+            ('Map Name', ['Room1','Room2','Hall'], 'real_map')
+        ]:
+            lbl = QLabel(label)
+            lbl.setFont(QFont('Arial', 14, QFont.Bold))
+            real_layout.addWidget(lbl)
+            combo = QComboBox()
+            combo.addItems(items)
+            combo.setCursor(QCursor(Qt.PointingHandCursor))
+            combo.setFont(QFont('Arial', 14, QFont.Bold))
+            combo.setFixedHeight(28)
+            combo.setStyleSheet(
+                'QComboBox { background-color:#ffffff; color:#000000; padding:4px; border:1px solid #cccccc; border-radius:4px; }'
+                'QComboBox:hover { border:1px solid #007ACC; }'
+            )
+            combo.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+            real_layout.addWidget(combo)
+            setattr(self, attr, combo)
 
-        btn_real = self.create_button('Real Robot', '#007ACC')
-        btn_real.clicked.connect(lambda: self.launch_mode('real'))
+        # Real control buttons
+        self.real_start = QPushButton('Start Real')
+        self.real_stop  = QPushButton('Stop Real')
+        for btn in (self.real_start, self.real_stop):
+            btn.setCursor(QCursor(Qt.PointingHandCursor))
+            btn.setFont(QFont('Arial', 14, QFont.Bold))
+            btn.setFixedHeight(38)
+            btn.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+            btn.setStyleSheet(
+                'QPushButton { background-color:#ffffff; border:2px solid #007ACC; border-radius:5px; }'
+                'QPushButton:hover { background-color:#E0F0FF; }'
+                'QPushButton:pressed { background-color:#007ACC; color:white; }'
+            )
+            real_layout.addWidget(btn)
+        real_group.setLayout(real_layout)
 
-        btn_sim = self.create_button('Simulated Robot', '#007ACC')
-        btn_sim.clicked.connect(lambda: self.launch_mode('sim'))
+        # Simulated Robot Section
+        sim_group = QGroupBox('Simulated Robot')
+        sim_group.setFont(QFont('Arial', 18, QFont.Bold))
+        sim_group.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sim_group.setStyleSheet(
+            "QGroupBox { background-color: #ffffff; border: 1px solid #cccccc; border-radius: 5px; margin-top: 20px; }"
+            "QGroupBox::title { subcontrol-origin: margin; subcontrol-position: top left; padding: 0 5px; color: #000000; }")
+        sim_layout = QVBoxLayout()
+        sim_layout.setContentsMargins(15, 30, 15, 15)
+        sim_layout.setSpacing(10)
 
-        button_layout.addWidget(btn_real)
-        button_layout.addWidget(btn_sim)
-        main_layout.addLayout(button_layout)
+        # Sim parameters
+        for label, items, attr in [
+            ('Use SLAM', ['true','false'], 'sim_slam'),
+            ('World Name', ['empty','small_house','small_warehouse'], 'sim_world'),
+            ('Map Name', ['small_house','small_warehouse'], 'sim_map')
+        ]:
+            lbl = QLabel(label)
+            lbl.setFont(QFont('Arial', 14, QFont.Bold))
+            sim_layout.addWidget(lbl)
+            combo = QComboBox()
+            combo.addItems(items)
+            combo.setCursor(QCursor(Qt.PointingHandCursor))
+            combo.setFont(QFont('Arial', 14, QFont.Bold))
+            combo.setFixedHeight(28)
+            combo.setStyleSheet(
+                'QComboBox { background-color:#ffffff; color:#000000; padding:4px; border:1px solid #cccccc; border-radius:4px; }'
+                'QComboBox:hover { border:1px solid #007ACC; }'
+            )
+            combo.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+            sim_layout.addWidget(combo)
+            setattr(self, attr, combo)
 
-        # Stop button
-        stop_layout = QHBoxLayout()
-        stop_layout.setAlignment(Qt.AlignCenter)
-        stop_layout.setContentsMargins(0, 20, 0, 0)
+        # Sim control buttons
+        self.sim_start = QPushButton('Start Sim')
+        self.sim_stop  = QPushButton('Stop Sim')
+        for btn in (self.sim_start, self.sim_stop):
+            btn.setCursor(QCursor(Qt.PointingHandCursor))
+            btn.setFont(QFont('Arial', 14, QFont.Bold))
+            btn.setFixedHeight(38)
+            btn.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+            btn.setStyleSheet(
+                'QPushButton { background-color:#ffffff; border:2px solid #007ACC; border-radius:5px; }'
+                'QPushButton:hover { background-color:#E0F0FF; }'
+                'QPushButton:pressed { background-color:#007ACC; color:white; }'
+            )
+            sim_layout.addWidget(btn)
+        sim_group.setLayout(sim_layout)
 
-        btn_stop = QPushButton('■')
-        btn_stop.setFixedSize(80, 80)
-        btn_stop.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        stop_font = QFont('Arial', 32, QFont.Bold)
-        btn_stop.setFont(stop_font)
-        btn_stop.setStyleSheet(
-            '''
-            QPushButton {
-                background-color: #E74C3C;
-                border: 2px solid #C0392B;
-                border-radius: 40px;
-                color: white;
-            }
-            QPushButton:hover {
-                background-color: #FF6B6B;
-            }
-            QPushButton:pressed {
-                background-color: #C0392B;
-            }
-            '''
-        )
-        stop_shadow = QGraphicsDropShadowEffect(self)
-        stop_shadow.setBlurRadius(20)
-        stop_shadow.setOffset(0, 4)
-        stop_shadow.setColor(QColor(0, 0, 0, 100))
-        btn_stop.setGraphicsEffect(stop_shadow)
-        btn_stop.clicked.connect(self.stop_all)
+        # Add sections to main layout
+        main_layout.addWidget(real_group)
+        main_layout.addWidget(sim_group)
 
-        stop_layout.addWidget(btn_stop)
-        main_layout.addLayout(stop_layout)
+        # Connect signals
+        self.real_start.clicked.connect(self.start_real)
+        self.real_stop.clicked.connect(self.stop_real)
+        self.sim_start.clicked.connect(self.start_sim)
+        self.sim_stop.clicked.connect(self.stop_sim)
 
-        # Track processes
-        self.processes = []
+        # Process handles
+        self.real_proc = None
+        self.sim_proc = None
 
-    def create_button(self, text, color):
-        btn = QPushButton(text)
-        btn.setFixedSize(200, 200)
-        btn.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        btn.setFont(QFont('Arial', 16))
-        btn.setStyleSheet(f"""
-            QPushButton {{
-                background-color: #ffffff;
-                border: 2px solid {color};
-                border-radius: 15px;
-                color: {color};
-            }}
-            QPushButton:hover {{ background-color: #E0F0FF; }}
-            QPushButton:pressed {{ background-color: {color}; color: white; }}
-        """
-        )
-        shadow = QGraphicsDropShadowEffect(self)
-        shadow.setBlurRadius(15)
-        shadow.setOffset(0, 5)
-        shadow.setColor(QColor(0, 0, 0, 75))
-        btn.setGraphicsEffect(shadow)
-        return btn
+    def start_real(self):
+        if self.real_proc and self.real_proc.poll() is None:
+            return
+        args = [
+            f'use_slam:={self.real_slam.currentText()}',
+            f'serial_port:={self.real_serial.currentText()}',
+            f'map_name:={self.real_map.currentText()}']
+        cmd = ['ros2','launch','mobi_bringup','real_robot.launch.py'] + args
+        self.real_proc = subprocess.Popen(cmd, env=os.environ, preexec_fn=os.setsid)
 
-    def launch_mode(self, mode):
-        # Build command
-        pkg = 'mobi_bringup'
-        launch_file = 'real_robot.launch.py' if mode == 'real' else 'simulated_robot.launch.py'
-        cmd = ['ros2', 'launch', pkg, launch_file]
-        # Start process with its own session (process group)
-        try:
-            p = subprocess.Popen(cmd, env=os.environ, preexec_fn=os.setsid)
-            self.processes.append(p)
-        except Exception as e:
-            print(f"Failed to start launch: {e}")
+    def stop_real(self):
+        if self.real_proc and self.real_proc.poll() is None:
+            os.killpg(os.getpgid(self.real_proc.pid), signal.SIGINT)
+            time.sleep(1)
+            if self.real_proc.poll() is None:
+                os.killpg(os.getpgid(self.real_proc.pid), signal.SIGTERM)
+        self.real_proc = None
 
-    def stop_all(self):
-        # Send SIGINT (Ctrl+C) to each group
-        for p in self.processes:
-            if p.poll() is None:
-                try:
-                    os.killpg(os.getpgid(p.pid), signal.SIGINT)
-                except Exception as e:
-                    print(f"Error sending SIGINT: {e}")
-        # Give processes time to shutdown
-        time.sleep(1)
-        # Force kill any remaining
-        for p in self.processes:
-            if p.poll() is None:
-                try:
-                    os.killpg(os.getpgid(p.pid), signal.SIGTERM)
-                except Exception as e:
-                    print(f"Error sending SIGTERM: {e}")
-        self.processes.clear()
+    def start_sim(self):
+        if self.sim_proc and self.sim_proc.poll() is None:
+            return
+        args = [
+            f'use_slam:={self.sim_slam.currentText()}',
+            f'world_name:={self.sim_world.currentText()}',
+            f'map_name:={self.sim_map.currentText()}']
+        cmd = ['ros2','launch','mobi_bringup','simulated_robot.launch.py'] + args
+        self.sim_proc = subprocess.Popen(cmd, env=os.environ, preexec_fn=os.setsid)
 
+    def stop_sim(self):
+        if self.sim_proc and self.sim_proc.poll() is None:
+            os.killpg(os.getpgid(self.sim_proc.pid), signal.SIGINT)
+            time.sleep(1)
+            if self.sim_proc.poll() is None:
+                os.killpg(os.getpgid(self.sim_proc.pid), signal.SIGTERM)
+        self.sim_proc = None
 
-def main():
+if __name__ == '__main__':
     app = QApplication(sys.argv)
-    app.setStyleSheet('QMainWindow { background-color: #f5f5f5; }')
     window = LauncherWindow()
     window.show()
     sys.exit(app.exec_())
-
-if __name__ == '__main__':
-    main()

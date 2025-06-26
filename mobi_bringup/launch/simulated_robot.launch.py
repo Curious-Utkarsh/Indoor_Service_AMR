@@ -148,17 +148,17 @@ def generate_launch_description():
     )
     
     return LaunchDescription([
-        # use_slam_arg,
-        # map_name_arg,
+        use_slam_arg,
+        map_name_arg,
         world_name_arg,
         gazebo,
         controller_only,
         #controller_with_slider,
         joystick,
-        # localization,
-        # slam,
-        # rviz_localization,
-        # rviz_slam,
+        localization,
+        slam,
+        rviz_localization,
+        rviz_slam,
         # navigation,
         # ekf,
         # vision,
