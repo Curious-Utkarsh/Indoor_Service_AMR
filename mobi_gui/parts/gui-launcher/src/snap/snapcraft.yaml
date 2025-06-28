@@ -1,0 +1,35 @@
+name: robot-launcher
+base: core22
+version: '1.0'
+summary: GUI for Robot Launcher
+description: |
+  A PyQt5-based dashboard to start/stop ROS2 real & simulated robots
+  and save maps with versioned folders.
+
+grade: stable
+confinement: classic
+
+apps:
+  robot-launcher:
+    command: gui                          # match your setup.py console_script
+    plugs: [desktop, desktop-legacy, x11, home, network]
+
+parts:
+  gui-launcher:
+    plugin: python
+    source: .
+    build-packages:
+      - python3-dev
+      - python3-venv
+    python-packages:
+      - PyQt5                             # pulls the Qt wheel inside the venv
+
+  desktop-entries:
+    plugin: dump
+    source: snap/local
+    stage:
+      - robot-launcher.desktop
+      - robot-launcher.png
+    organize:
+      robot-launcher.desktop: share/applications/robot-launcher.desktop
+      robot-launcher.png:      share/icons/hicolor/128x128/apps/robot-launcher.png
