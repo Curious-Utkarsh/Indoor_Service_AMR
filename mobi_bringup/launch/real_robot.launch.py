@@ -26,7 +26,7 @@ def generate_launch_description():
 
     map_name_arg = DeclareLaunchArgument(
         "map_name",
-        default_value="hostel_corridor"
+        default_value="Room1"
     )
 
 
@@ -146,14 +146,14 @@ def generate_launch_description():
     return LaunchDescription([
         use_slam_arg,
         serial_port_arg,
-        # map_name_arg,
+        map_name_arg,
         hardware_interface,
         laser_driver,
         controller_only,
         # controller_with_slider,
         joystick,
         imu_driver_node,
-        # localization,
+        localization,
         slam,
         #navigation,
         #ekf,
