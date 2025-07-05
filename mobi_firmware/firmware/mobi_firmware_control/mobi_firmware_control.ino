@@ -1,30 +1,33 @@
 #include <PID_v1.h>
 // Motor Driver Pins
-#define LEFT_MOTOR_DIR_PIN   4
-#define LEFT_MOTOR_PWM_PIN   15
-#define RIGHT_MOTOR_DIR_PIN  23
-#define RIGHT_MOTOR_PWM_PIN  22
+#define LEFT_MOTOR_PWM_PIN 0
+#define LEFT_MOTOR_DIR_PIN 1
+#define RIGHT_MOTOR_PWM_PIN 4
+#define RIGHT_MOTOR_DIR_PIN 5
 
 // Motor Encoder Pins
-#define LEFT_ENCODER_A_PIN   17 
-#define LEFT_ENCODER_B_PIN   16  
-#define RIGHT_ENCODER_A_PIN  18
-#define RIGHT_ENCODER_B_PIN   5
+#define LEFT_ENCODER_A_PIN 6
+#define LEFT_ENCODER_B_PIN 7
+#define RIGHT_ENCODER_A_PIN 8
+#define RIGHT_ENCODER_B_PIN 9
 
-#define MOTOR_SPEED 100 //30RPM at 100 value, donot increase more than 100.
+#define MOTOR_PWM_MAX 200 //Can set to 150 (136 to be precise) to meet your controller set speed in controllers.yaml
 
-#define ENCODER_CPR_LEFT  159200 //works for 100 Motor Speed
-#define ENCODER_CPR_RIGHT 159200 //works for 100 Motor Speed
+#define ENCODER_CPR_LEFT  80000 
+#define ENCODER_CPR_RIGHT 80000 
 
-void IRAM_ATTR leftEncoderISR();
-void IRAM_ATTR rightEncoderISR();
+#define TWO_PI 6.28318530718
+
+void leftEncoderISR();
+void rightEncoderISR();
 
 unsigned volatile long leftEncoderCount = 0;
 unsigned volatile long rightEncoderCount = 0;
 String right_wheel_sign = "p";  // 'p' = positive, 'n' = negative
 String left_wheel_sign = "p";  // 'p' = positive, 'n' = negative
 unsigned long last_millis = 0;
-const unsigned long interval = 100;
+const unsigned long interval = 50;
+
 
 bool is_right_wheel_cmd = false;
 bool is_left_wheel_cmd = false;
@@ -43,14 +46,14 @@ double left_wheel_cmd_vel = 0.0;      // rad/s
 double right_wheel_meas_vel = 0.0;    // rad/s
 double left_wheel_meas_vel = 0.0;     // rad/s
 // Output - Command
-double right_wheel_cmd = 0.0;             // 0-255
-double left_wheel_cmd = 0.0;              // 0-255
+double right_wheel_cmd = 0.0;             // 0-255 (PWM)
+double left_wheel_cmd = 0.0;              // 0-255 (PWM)
 // Tuning
-double Kp_r = 8.0; //10.0
-double Ki_r = 7.0;
+double Kp_r = 12.0;
+double Ki_r = 8.0;
 double Kd_r = 0.1;
-double Kp_l = 8.0; //10.0
-double Ki_l = 7.0;
+double Kp_l = 12.0;
+double Ki_l = 8.0;
 double Kd_l = 0.1;
 // Controller
 PID rightMotor(&right_wheel_meas_vel, &right_wheel_cmd, &right_wheel_cmd_vel, Kp_r, Ki_r, Kd_r, DIRECT);
@@ -63,16 +66,16 @@ void setup()
   pinMode(RIGHT_MOTOR_DIR_PIN, OUTPUT);
   pinMode(RIGHT_MOTOR_PWM_PIN, OUTPUT);
 
-  pinMode(LEFT_ENCODER_A_PIN,  INPUT);
-  pinMode(LEFT_ENCODER_B_PIN,  INPUT);
-  pinMode(RIGHT_ENCODER_A_PIN, INPUT);
-  pinMode(RIGHT_ENCODER_B_PIN, INPUT);
+  pinMode(LEFT_ENCODER_A_PIN,  INPUT_PULLUP);
+  pinMode(LEFT_ENCODER_B_PIN,  INPUT_PULLUP);
+  pinMode(RIGHT_ENCODER_A_PIN, INPUT_PULLUP);
+  pinMode(RIGHT_ENCODER_B_PIN, INPUT_PULLUP);
 
   rightMotor.SetMode(AUTOMATIC);
   leftMotor.SetMode(AUTOMATIC);
 
-  attachInterrupt(digitalPinToInterrupt(LEFT_ENCODER_A_PIN), leftEncoderISR, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(RIGHT_ENCODER_A_PIN), rightEncoderISR, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(LEFT_ENCODER_A_PIN), leftEncoderISR, RISING);
+  attachInterrupt(digitalPinToInterrupt(RIGHT_ENCODER_A_PIN), rightEncoderISR, RISING);
 
   Serial.begin(115200);
 }
@@ -91,7 +94,7 @@ void loop()
       value_idx = 0;
       is_cmd_complete = false;
     }
-    // Left Wheel Mo tor
+    // Left Wheel Motor
     else if(chr == 'l')
     {
       is_right_wheel_cmd = false;
@@ -164,10 +167,13 @@ void loop()
 
     // Encoder
   unsigned long current_millis = millis();
-  if(current_millis - last_millis >= interval)
+  unsigned long delta_millis = current_millis - last_millis;
+  if(delta_millis >= interval) //20Hz (50 ms)
   {
-    right_wheel_meas_vel = 10*(rightEncoderCount/2)*(60.0/(270.0*334.0*1.87)) * 0.10472; //Hit and Trial Factor 1.88 done manually
-    left_wheel_meas_vel = 10*(leftEncoderCount/2)*(60.0/(270.0*334.0*1.87)) * 0.10472; 
+    double delta_t = delta_millis / 1000.0;  // Convert to seconds
+
+    right_wheel_meas_vel = (rightEncoderCount * TWO_PI) / (ENCODER_CPR_RIGHT * delta_t);
+    left_wheel_meas_vel  = (leftEncoderCount  * TWO_PI) / (ENCODER_CPR_LEFT  * delta_t);
 
     rightMotor.Compute();
     leftMotor.Compute();
@@ -188,13 +194,16 @@ void loop()
     rightEncoderCount = 0;
     leftEncoderCount = 0;
 
-    //Serial.println(left_wheel_cmd);
+    // Constrain motor commands to valid PWM range
+    left_wheel_cmd = constrain(left_wheel_cmd, 0, MOTOR_PWM_MAX);
+    right_wheel_cmd = constrain(right_wheel_cmd, 0, MOTOR_PWM_MAX);
+
     analogWrite(LEFT_MOTOR_PWM_PIN, left_wheel_cmd);
     analogWrite(RIGHT_MOTOR_PWM_PIN, right_wheel_cmd);
   }
 }
 
-void IRAM_ATTR leftEncoderISR() 
+void leftEncoderISR() 
 {
   leftEncoderCount++;
   if (digitalRead(LEFT_ENCODER_A_PIN) == digitalRead(LEFT_ENCODER_B_PIN)) 
@@ -207,7 +216,7 @@ void IRAM_ATTR leftEncoderISR()
   }
 }
 
-void IRAM_ATTR rightEncoderISR() 
+void rightEncoderISR() 
 {
   rightEncoderCount++;
   if (digitalRead(RIGHT_ENCODER_A_PIN) == digitalRead(RIGHT_ENCODER_B_PIN)) 

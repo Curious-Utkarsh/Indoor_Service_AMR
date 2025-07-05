@@ -38,12 +38,12 @@
         -->
         <xacro:if value="$(eval serial_port == '/dev/ttyUSB0')">
           <plugin>mobi_firmware/MobiInterface</plugin>
-          <param name="port">/dev/ttyUSB1</param>
+          <param name="port">/dev/ttyACM0</param>
         </xacro:if>
 
         <xacro:if value="$(eval serial_port == '/dev/ttyUSB1')">
           <plugin>mobi_firmware/MobiInterface</plugin>
-          <param name="port">/dev/ttyUSB0</param>
+          <param name="port">/dev/ttyACM0</param>
         </xacro:if>
       </hardware>
     </xacro:unless>
@@ -52,8 +52,8 @@
     <!-- 60rpm = 6.3rad/sec -->
     <joint name="right_wheel_joint">
       <command_interface name="velocity">
-        <param name="min">-6.3</param>
-        <param name="max">6.3</param>
+        <param name="min">-4.5</param>
+        <param name="max">4.5</param>
       </command_interface>
       <state_interface name="position" />
       <state_interface name="velocity" />
@@ -61,8 +61,8 @@
 
     <joint name="left_wheel_joint">
       <command_interface name="velocity">
-        <param name="min">-6.3</param>
-        <param name="max">6.3</param>
+        <param name="min">-4.5</param>
+        <param name="max">4.5</param>
       </command_interface>
       <state_interface name="position" />
       <state_interface name="velocity" />

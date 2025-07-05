@@ -19,7 +19,7 @@ wheel_controller:
   ros__parameters:
     type: diff_drive_controller/DiffDriveController
 
-    use_stamped_vel: false
+    use_stamped_vel: false #To use Twist instead of TwistStamped
     
     left_wheel_names  : ['left_wheel_joint']
     right_wheel_names : ['right_wheel_joint']
@@ -53,23 +53,23 @@ wheel_controller:
     linear:
       x:
         has_velocity_limits    : true
-        max_velocity           : 2.0  # m/s
-        min_velocity           : -2.0 # m/s
+        max_velocity           : 0.25  # m/s
+        min_velocity           : -0.25 # m/s
         has_acceleration_limits: true
-        max_acceleration       : 0.7  # m/s^2
-        min_acceleration       : -0.7 # m/s^2
+        max_acceleration       : 0.25  # m/s^2
+        min_acceleration       : -0.25 # m/s^2
         has_jerk_limits        : false
-        max_jerk               : 5.0  # m/s^3
+        max_jerk               : 0.5  # m/s^3
     angular:
       z:
         has_velocity_limits    : true
-        max_velocity           : 3.0  # rad/s
-        min_velocity           : -3.0  # rad/s
+        max_velocity           : 1.12  # rad/s
+        min_velocity           : -1.12  # rad/s
         has_acceleration_limits: true
-        max_acceleration       : 5.0  # rad/s^2
-        min_acceleration       : -5.0   # rad/s^2
+        max_acceleration       : 1.12  # rad/s^2
+        min_acceleration       : -1.12   # rad/s^2
         has_jerk_limits        : false
-        max_jerk               : 2.5  # rad/s^3
+        max_jerk               : 2.24  # rad/s^3
 
 
 # rail_controller:

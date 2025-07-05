@@ -12,11 +12,11 @@ MobiInterface::MobiInterface()
 
 MobiInterface::~MobiInterface()
 {
-  if (arduino_.IsOpen())
+  if (teensy_.IsOpen())
   {
     try
     {
-      arduino_.Close();
+      teensy_.Close();
     }
     catch (...)
     {
@@ -97,8 +97,8 @@ CallbackReturn MobiInterface::on_activate(const rclcpp_lifecycle::State &)
 
   try
   {
-    arduino_.Open(port_);
-    arduino_.SetBaudRate(LibSerial::BaudRate::BAUD_115200);
+    teensy_.Open(port_);
+    teensy_.SetBaudRate(LibSerial::BaudRate::BAUD_115200);
   }
   catch (...)
   {
@@ -117,11 +117,11 @@ CallbackReturn MobiInterface::on_deactivate(const rclcpp_lifecycle::State &)
 {
   RCLCPP_INFO(rclcpp::get_logger("MobiInterface"), "Stopping robot hardware ...");
 
-  if (arduino_.IsOpen())
+  if (teensy_.IsOpen())
   {
     try
     {
-      arduino_.Close();
+      teensy_.Close();
     }
     catch (...)
     {
@@ -139,11 +139,11 @@ hardware_interface::return_type MobiInterface::read(const rclcpp::Time &,
                                                           const rclcpp::Duration &)
 {
   // Interpret the string
-  if(arduino_.IsDataAvailable())
+  if(teensy_.IsDataAvailable())
   {
     auto dt = (rclcpp::Clock().now() - last_run_).seconds();
     std::string message;
-    arduino_.ReadLine(message);
+    teensy_.ReadLine(message);
     std::stringstream ss(message);
     std::string res;
     int multiplier = 1;
@@ -200,7 +200,7 @@ hardware_interface::return_type MobiInterface::write(const rclcpp::Time &,
 
   try
   {
-    arduino_.Write(message_stream.str());
+    teensy_.Write(message_stream.str());
   }
   catch (...)
   {
