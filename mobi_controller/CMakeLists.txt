@@ -15,6 +15,7 @@ find_package(trajectory_msgs REQUIRED)
 find_package(twist_mux_msgs REQUIRED)
 find_package(rclcpp_action REQUIRED)
 find_package(visualization_msgs REQUIRED)
+find_package(mobi_utils REQUIRED)
 
 add_executable(slider_control src/slider_control.cpp)
 ament_target_dependencies(slider_control rclcpp trajectory_msgs sensor_msgs)

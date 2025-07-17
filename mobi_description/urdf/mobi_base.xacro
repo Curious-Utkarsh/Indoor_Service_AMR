@@ -15,7 +15,7 @@
             <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
         </inertial>
         <visual>
-            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <origin xyz="0.15 0.0 0.0" rpy="0.0 0.0 0.0"/>
             <geometry>
                 <mesh filename="package://mobi_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
             </geometry>
@@ -30,7 +30,7 @@
     </link>
 
     <joint name="base_joint" type="fixed">
-        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <origin xyz="-0.15 0.0 0.0" rpy="0.0 0.0 0.0"/>
         <parent link="base_footprint"/>
         <child link="base_link"/>
     </joint>
@@ -59,7 +59,7 @@
     </link>
 
     <joint name="right_wheel_joint" type="continuous">
-        <origin xyz="0.0 -0.2275 0.06" rpy="0.0 0.0 0.0"/>
+        <origin xyz="0.15 -0.2275 0.06" rpy="0.0 0.0 0.0"/>
         <parent link="base_link"/>
         <child link="right_wheel"/>
         <axis xyz="0.0 1.0 0.0"/>
@@ -89,7 +89,7 @@
     </link>
 
     <joint name="left_wheel_joint" type="continuous">
-        <origin xyz="0.0 0.2275 0.06" rpy="0.0 0.0 0.0"/>
+        <origin xyz="0.15 0.2275 0.06" rpy="0.0 0.0 0.0"/>
         <parent link="base_link"/>
         <child link="left_wheel"/>
         <axis xyz="0.0 1.0 0.0"/>
@@ -117,7 +117,7 @@
     </link>
 
     <joint name="left_castor_joint" type="fixed">
-        <origin xyz="-0.355 0.15 0.05" rpy="0.0 0.0 0.0"/>
+        <origin xyz="-0.205 0.15 0.05" rpy="0.0 0.0 0.0"/>
         <parent link="base_link"/>
         <child link="left_castor_wheel"/>
     </joint>
@@ -144,7 +144,7 @@
     </link>
 
     <joint name="right_castor_joint" type="fixed">
-        <origin xyz="-0.355 -0.15 0.045" rpy="0.0 0.0 0.0"/>
+        <origin xyz="-0.205 -0.15 0.045" rpy="0.0 0.0 0.0"/>
         <parent link="base_link"/>
         <child link="right_castor_wheel"/>
     </joint>
@@ -171,7 +171,7 @@
     </link>
 
     <joint name="front_castor_joint" type="fixed">
-        <origin xyz="0.1 0.0 0.062" rpy="0.0 0.0 0.0"/>
+        <origin xyz="0.25 0.0 0.062" rpy="0.0 0.0 0.0"/>
         <parent link="base_link"/>
         <child link="front_castor_wheel"/>
     </joint>

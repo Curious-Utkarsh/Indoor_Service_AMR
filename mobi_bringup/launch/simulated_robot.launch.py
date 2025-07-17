@@ -25,7 +25,7 @@ def generate_launch_description():
 
     world_name_arg = DeclareLaunchArgument(
         "world_name",
-        default_value="empty" #Change this when using slam
+        default_value="small_house" #Change this when using slam
     )
 
     gazebo = IncludeLaunchDescription(
@@ -79,6 +79,18 @@ def generate_launch_description():
         condition=UnlessCondition(use_slam)
     )
 
+    navigation = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(
+                get_package_share_directory("mobi_navigation"),
+                "launch",
+                "navigation.launch.py"
+            )
+        ),
+        launch_arguments={"use_sim_time": "True"}.items(),
+        condition=UnlessCondition(use_slam)
+    )
+
     slam = IncludeLaunchDescription(
         os.path.join(
             get_package_share_directory("mobi_mapping"),
@@ -117,17 +129,6 @@ def generate_launch_description():
         condition=IfCondition(use_slam)
     )
 
-    navigation = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            os.path.join(
-                get_package_share_directory("mobi_navigation"),
-                "launch",
-                "navigation.launch.py"
-            )
-        ),
-        launch_arguments={"use_sim_time": "True"}.items()
-    )
-
     ekf = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(
@@ -159,7 +160,7 @@ def generate_launch_description():
         slam,
         rviz_localization,
         rviz_slam,
-        # navigation,
+        navigation,
         # ekf,
         # vision,
     ])

@@ -26,7 +26,7 @@ unsigned volatile long rightEncoderCount = 0;
 String right_wheel_sign = "p";  // 'p' = positive, 'n' = negative
 String left_wheel_sign = "p";  // 'p' = positive, 'n' = negative
 unsigned long last_millis = 0;
-const unsigned long interval = 50;
+const unsigned long interval = 10; //100 Hz
 
 
 bool is_right_wheel_cmd = false;
@@ -77,7 +77,7 @@ void setup()
   attachInterrupt(digitalPinToInterrupt(LEFT_ENCODER_A_PIN), leftEncoderISR, RISING);
   attachInterrupt(digitalPinToInterrupt(RIGHT_ENCODER_A_PIN), rightEncoderISR, RISING);
 
-  Serial.begin(115200);
+  Serial.begin(500000);
 }
 
 void loop() 

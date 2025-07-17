@@ -143,6 +143,13 @@ def generate_launch_description():
         launch_arguments={"use_sim_time": "False"}.items()
     )
 
+    ultrasonic_node = Node(
+        package="mobi_utils",
+        executable="ultrasonic.py",
+        name="ultrasonic_publisher",
+        output="screen"
+    )
+
     return LaunchDescription([
         #use_slam_arg,
         serial_port_arg,
@@ -157,4 +164,5 @@ def generate_launch_description():
         #slam,
         #navigation,
         #ekf,
+        ultrasonic_node,
     ])

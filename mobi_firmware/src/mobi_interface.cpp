@@ -98,7 +98,7 @@ CallbackReturn MobiInterface::on_activate(const rclcpp_lifecycle::State &)
   try
   {
     teensy_.Open(port_);
-    teensy_.SetBaudRate(LibSerial::BaudRate::BAUD_115200);
+    teensy_.SetBaudRate(LibSerial::BaudRate::BAUD_500000);
   }
   catch (...)
   {

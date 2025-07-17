@@ -29,6 +29,14 @@ def generate_launch_description():
         ],
     )
 
+    # --- mobi_utils: safety_stop.cpp ---
+    safety_stop_node = Node(
+        package="mobi_utils",
+        executable="safety_stop",
+        name="safety_stop",
+        output="screen"
+    )
+
     # rail_controller_spawner = Node(
     #     package="controller_manager",
     #     executable="spawner",
@@ -45,6 +53,7 @@ def generate_launch_description():
         [
             joint_state_broadcaster_spawner,
             wheel_controller_spawner,
+            safety_stop_node,
             # rail_controller_spawner,
             # neck_controller_spawner,
         ]

@@ -26,7 +26,7 @@ public:
   SafetyStop() : Node("safety_stop_node"), is_first_msg_(true), state_{State::FREE}, prev_state_{State::FREE}
   {
     declare_parameter<double>("warning_distance", 0.6);
-    declare_parameter<double>("danger_distance", 0.2);
+    declare_parameter<double>("danger_distance", 0.1);
     declare_parameter<std::string>("scan_topic", "scan");
     declare_parameter<std::string>("safety_stop_topic", "safety_stop");
     warning_distance_ = get_parameter("warning_distance").as_double();

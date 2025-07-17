@@ -35,6 +35,7 @@
   <exec_depend>ros2_control</exec_depend>
   <exec_depend>twist_mux</exec_depend>
   <exec_depend>joint_state_publisher_gui</exec_depend>
+  <exec_depend>mobi_utils</exec_depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

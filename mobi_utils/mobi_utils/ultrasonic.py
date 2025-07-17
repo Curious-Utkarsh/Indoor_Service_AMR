@@ -116,7 +116,13 @@ class DistancePublisher(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    node = DistancePublisher()
+    try:
+        node = DistancePublisher()
+    except Exception as e:
+        print(f"[FATAL] Failed to start node: {e}")
+        rclpy.shutdown()
+        return
+
     try:
         rclpy.spin(node)
     except KeyboardInterrupt:
