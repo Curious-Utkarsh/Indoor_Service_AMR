@@ -80,16 +80,12 @@ def generate_launch_description():
     )
 
     navigation = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
             os.path.join(
                 get_package_share_directory("mobi_navigation"),
                 "launch",
                 "navigation.launch.py"
-            )
-        ),
-        launch_arguments={"use_sim_time": "True"}.items(),
-        condition=UnlessCondition(use_slam)
-    )
+            ),
+        )
 
     slam = IncludeLaunchDescription(
         os.path.join(
@@ -101,7 +97,7 @@ def generate_launch_description():
         condition=IfCondition(use_slam)
     )
 
-    rviz_localization = Node(
+    rviz = Node(
         package="rviz2",
         executable="rviz2",
         arguments=["-d", os.path.join(
@@ -112,21 +108,6 @@ def generate_launch_description():
         ],
         output="screen",
         parameters=[{"use_sim_time": True}],
-        condition=UnlessCondition(use_slam)
-    )
-
-    rviz_slam = Node(
-        package="rviz2",
-        executable="rviz2",
-        arguments=["-d", os.path.join(
-                get_package_share_directory("mobi_mapping"),
-                "rviz",
-                "slam.rviz"
-            )
-        ],
-        output="screen",
-        parameters=[{"use_sim_time": True}],
-        condition=IfCondition(use_slam)
     )
 
     ekf = IncludeLaunchDescription(
@@ -147,6 +128,22 @@ def generate_launch_description():
             "vision.launch.py"
         ),
     )
+
+    speech = IncludeLaunchDescription( 
+        os.path.join(
+            get_package_share_directory("mobi_speech"),
+            "launch",
+            "speech.launch.py"
+        ),
+    )
+
+    script = IncludeLaunchDescription( 
+        os.path.join(
+            get_package_share_directory("mobi_script"),
+            "launch",
+            "script.launch.py"
+        ),
+    )
     
     return LaunchDescription([
         use_slam_arg,
@@ -158,9 +155,10 @@ def generate_launch_description():
         joystick,
         localization,
         slam,
-        rviz_localization,
-        rviz_slam,
+        rviz,
         navigation,
         # ekf,
         # vision,
+        speech,
+        script,
     ])

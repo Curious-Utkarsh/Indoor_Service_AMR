@@ -53,7 +53,7 @@ def generate_launch_description():
         [
             joint_state_broadcaster_spawner,
             wheel_controller_spawner,
-            safety_stop_node,
+            # safety_stop_node,
             # rail_controller_spawner,
             # neck_controller_spawner,
         ]

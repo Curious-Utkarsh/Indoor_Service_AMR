@@ -8,12 +8,6 @@
   <license>TODO: License declaration</license>
 
   <depend>rclpy</depend>
-  <!-- <depend>sounddevice</depend>
-  <depend>scipy</depend>
-  <depend>playsound</depend>
-  <depend>gtts</depend>
-  <depend>whisper</depend>
-  <depend>google-generativeai</depend> -->
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>

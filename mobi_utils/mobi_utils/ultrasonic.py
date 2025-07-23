@@ -6,6 +6,7 @@ from std_msgs.msg import Float32
 from visualization_msgs.msg import Marker
 import RPi.GPIO as GPIO
 import time
+from collections import deque  # For moving average filter
 
 # GPIO pin numbers for the ultrasonic sensor (BCM mode)
 TRIG_PIN = 4
@@ -27,6 +28,10 @@ class DistancePublisher(Node):
         # GPIO setup
         self.setup_gpio()
 
+        # Buffer for moving average
+        self.window_size = 5
+        self.distance_buffer = deque(maxlen=self.window_size)
+
         self.get_logger().info('Ultrasonic Publisher Node started.')
         self.get_logger().info('Publishing distance and visualization marker.')
 
@@ -41,6 +46,10 @@ class DistancePublisher(Node):
             self.get_logger().error(f'GPIO Setup Error: {e}')
             GPIO.cleanup()
             rclpy.shutdown()
+
+    def moving_average(self, buffer, new_value):
+        buffer.append(new_value)
+        return sum(buffer) / len(buffer)
 
     def measure_and_publish_distance(self):
         try:
@@ -67,14 +76,16 @@ class DistancePublisher(Node):
             distance_cm = (pulse_duration * 34300) / 2
             distance_cm = round(distance_cm, 2)
 
+            # Apply moving average filter
+            filtered_distance = self.moving_average(self.distance_buffer, distance_cm)
+
             # Publish Float32 distance
             msg = Float32()
-            msg.data = float(distance_cm)
+            msg.data = float(filtered_distance)
             self.distance_pub.publish(msg)
-            self.get_logger().info(f'Distance: {distance_cm:.2f} cm')
 
-            # Publish RViz2 marker
-            self.publish_marker(distance_cm)
+            # Publish RViz2 marker using filtered distance
+            self.publish_marker(filtered_distance)
 
         except TimeoutError as e:
             self.get_logger().warn(str(e))

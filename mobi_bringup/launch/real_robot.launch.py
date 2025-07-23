@@ -109,6 +109,14 @@ def generate_launch_description():
         condition=UnlessCondition(use_slam)
     )
 
+    navigation = IncludeLaunchDescription(
+        os.path.join(
+            get_package_share_directory("mobi_navigation"),
+            "launch",
+            "navigation.launch.py"
+        ),
+    )
+
     slam = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(
@@ -119,17 +127,6 @@ def generate_launch_description():
         ),
         launch_arguments={"use_sim_time": "False"}.items(),
         condition=IfCondition(use_slam)
-    )
-
-    navigation = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            os.path.join(
-                get_package_share_directory("mobi_navigation"),
-                "launch",
-                "navigation.launch.py"
-            )
-        ),
-        launch_arguments={"use_sim_time": "False"}.items()
     )
 
     ekf = IncludeLaunchDescription(
@@ -150,19 +147,33 @@ def generate_launch_description():
         output="screen"
     )
 
+    rviz = Node(
+        package="rviz2",
+        executable="rviz2",
+        arguments=["-d", os.path.join(
+                get_package_share_directory("mobi_localization"),
+                "rviz",
+                "global_localization.rviz"
+            )
+        ],
+        output="screen",
+        parameters=[{"use_sim_time": False}]
+    )
+
     return LaunchDescription([
-        #use_slam_arg,
+        use_slam_arg,
         serial_port_arg,
-        #map_name_arg,
+        map_name_arg,
         hardware_interface,
         laser_driver,
         controller_only,
         # controller_with_slider,
         joystick,
         imu_driver_node,
-        #localization,
-        #slam,
-        #navigation,
+        localization,
+        slam,
+        navigation,
         #ekf,
         ultrasonic_node,
+        rviz,
     ])

@@ -22,6 +22,7 @@
   <exec_depend>mobi_utils</exec_depend>
   <exec_depend>mobi_planning</exec_depend>
   <exec_depend>mobi_motion</exec_depend>
+  <exec_depend>mobi_speech</exec_depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

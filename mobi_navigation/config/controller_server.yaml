@@ -1,7 +1,7 @@
 controller_server:
   ros__parameters:
     use_sim_time: true
-    controller_frequency: 20.0 #Higher than this more computaion but better result.
+    controller_frequency: 20.0 #Higher than 20 more computaion but better result.
     min_x_velocity_threshold: 0.001
     min_y_velocity_threshold: 0.5
     min_theta_velocity_threshold: 0.001
@@ -68,13 +68,14 @@ controller_server:
       interpolate_curvature_after_goal: false
       cost_scaling_dist: 0.3
       cost_scaling_gain: 1.0
-      inflation_cost_scaling_factor: 3.0
+      inflation_cost_scaling_factor: 3.0           
+      allow_reversing: true
 
 local_costmap:
   local_costmap:
     ros__parameters:
-      update_frequency: 5.0
-      publish_frequency: 2.0
+      update_frequency: 10.0
+      publish_frequency: 5.0
       global_frame: odom
       robot_base_frame: base_link
       use_sim_time: true
@@ -82,12 +83,12 @@ local_costmap:
       width: 3
       height: 3
       resolution: 0.05
-      robot_radius: 0.38
+      footprint: "[[-0.29, -0.28], [-0.29, 0.28], [0.29, 0.28], [0.29, -0.28]]"
       plugins: ["obstacle_layer", "inflation_layer"]
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 3.0
-        inflation_radius: 0.83
+        cost_scaling_factor: 10.0
+        inflation_radius: 0.30
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: True
@@ -98,8 +99,9 @@ local_costmap:
           clearing: True
           marking: True
           data_type: "LaserScan"
-          raytrace_max_range: 3.0
+          raytrace_max_range: 4.0
           raytrace_min_range: 0.0
-          obstacle_max_range: 2.5
+          obstacle_max_range: 3.0
           obstacle_min_range: 0.0
+        observation_keep_time: 0.3     # Short time to forget removed obstacles
       always_send_full_costmap: True

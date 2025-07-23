@@ -13,7 +13,7 @@ amcl:
     global_frame_id: "map"
     lambda_short: 0.1
     laser_likelihood_max_dist: 2.0
-    laser_max_range: 8.0 #Good for indoor mapping, can set to 8.0 as well.
+    laser_max_range: 6.0 #Good for indoor mapping, can set to 8.0 as well.
     laser_min_range: 0.40 #To Avoid rods of the robot structure
     laser_model_type: "likelihood_field"
     max_beams: 60
