@@ -16,6 +16,9 @@ import asyncio
 from concurrent.futures import ThreadPoolExecutor
 import json
 
+from pathlib import Path
+
+# ros2 topic pub --once /mobi/intents std_msgs/msg/String "data: 'undock'"
 
 
 class VoiceLLMNode(Node):
@@ -27,7 +30,8 @@ class VoiceLLMNode(Node):
         self.get_logger().info("Voice LLM node started")
 
         # Setup paths
-        self.BASE_PATH = "/home/utk/mobi_ws/src/mobi_speech/output_voice"
+        self.BASE_PATH = Path.home() / "mobi_ws" / "src" / "mobi_speech" / "output_voice"
+        self.BASE_PATH.mkdir(parents=True, exist_ok=True)  # create if not exists
         os.makedirs(self.BASE_PATH, exist_ok=True)
 
         # Load Whisper
@@ -71,7 +75,7 @@ class VoiceLLMNode(Node):
                 valid_intents = {"go_to_user", "dock", "undock", "go_to_kitchen", "stop"}
 
                 if intent_value in valid_intents:
-                    # self.speak(self.intent_to_speech(intent_value))
+                    #self.speak(self.intent_to_speech(intent_value))
                     self.get_logger().info(f"Intent Value: {intent_value}")
                     msg = String()
                     msg.data = intent_value

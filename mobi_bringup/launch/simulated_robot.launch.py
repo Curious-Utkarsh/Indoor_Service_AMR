@@ -158,7 +158,7 @@ def generate_launch_description():
         rviz,
         navigation,
         # ekf,
-        # vision,
+        # vision, #No need to launch in simulation
         speech,
         script,
     ])

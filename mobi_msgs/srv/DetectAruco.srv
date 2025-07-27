@@ -1,0 +1,7 @@
+# Request has no fields
+---
+
+# Response
+int32[] center_x
+int32[] center_y
+string[] ids

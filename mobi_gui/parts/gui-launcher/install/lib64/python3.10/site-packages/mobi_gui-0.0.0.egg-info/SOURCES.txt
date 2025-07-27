@@ -1,0 +1,16 @@
+package.xml
+setup.cfg
+setup.py
+mobi_gui/__init__.py
+mobi_gui/gui.py
+mobi_gui.egg-info/PKG-INFO
+mobi_gui.egg-info/SOURCES.txt
+mobi_gui.egg-info/dependency_links.txt
+mobi_gui.egg-info/entry_points.txt
+mobi_gui.egg-info/requires.txt
+mobi_gui.egg-info/top_level.txt
+mobi_gui.egg-info/zip-safe
+resource/mobi_gui
+test/test_copyright.py
+test/test_flake8.py
+test/test_pep257.py

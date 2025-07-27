@@ -26,6 +26,7 @@ setup(
     entry_points={
         'console_scripts': [
             'task_handler = mobi_script.task_handler:main',
+            'undock_action_server = mobi_script.undock_action_server:main',
         ],
     },
 )

@@ -5,9 +5,7 @@ import rclpy
 from rclpy.node import Node
 from rclpy.qos import qos_profile_sensor_data
 from sensor_msgs.msg import Imu
-from collections import deque  # Added for moving average filter
 
-# MPU6050 Register Addresses
 PWR_MGMT_1   = 0x6B
 SMPLRT_DIV   = 0x19
 CONFIG       = 0x1A
@@ -27,7 +25,7 @@ class MPU6050_Driver(Node):
     def __init__(self):
         super().__init__("mpu6050_driver")
         
-        # I2C Interface
+        # I2C Interafce
         self.is_connected_ = False
         self.init_i2c()
 
@@ -38,53 +36,31 @@ class MPU6050_Driver(Node):
         self.frequency_ = 0.01
         self.timer_ = self.create_timer(self.frequency_, self.timerCallback)
 
-        # Moving Average Filter Buffers (window size = 5)
-        self.window_size = 5
-        self.acc_x_buffer = deque(maxlen=self.window_size)
-        self.acc_y_buffer = deque(maxlen=self.window_size)
-        self.acc_z_buffer = deque(maxlen=self.window_size)
-        self.gyro_x_buffer = deque(maxlen=self.window_size)
-        self.gyro_y_buffer = deque(maxlen=self.window_size)
-        self.gyro_z_buffer = deque(maxlen=self.window_size)
-
-    def moving_average(self, buffer, new_value):
-        buffer.append(new_value)
-        return sum(buffer) / len(buffer)
-
     def timerCallback(self):
         try:
             if not self.is_connected_:
                 self.init_i2c()
             
-            # Read Accelerometer raw values
+            # Read Accelerometer raw value
             acc_x = self.read_raw_data(ACCEL_XOUT_H)
             acc_y = self.read_raw_data(ACCEL_YOUT_H)
             acc_z = self.read_raw_data(ACCEL_ZOUT_H)
             
-            # Read Gyroscope raw values
+            # Read Gyroscope raw value
             gyro_x = self.read_raw_data(GYRO_XOUT_H)
             gyro_y = self.read_raw_data(GYRO_YOUT_H)
             gyro_z = self.read_raw_data(GYRO_ZOUT_H)
             
-            # Apply Moving Average Filter
-            acc_x_avg = self.moving_average(self.acc_x_buffer, acc_x)
-            acc_y_avg = self.moving_average(self.acc_y_buffer, acc_y)
-            acc_z_avg = self.moving_average(self.acc_z_buffer, acc_z)
-            gyro_x_avg = self.moving_average(self.gyro_x_buffer, gyro_x)
-            gyro_y_avg = self.moving_average(self.gyro_y_buffer, gyro_y)
-            gyro_z_avg = self.moving_average(self.gyro_z_buffer, gyro_z)
-            
-            # Convert to proper units and populate message
-            self.imu_msg_.linear_acceleration.x = acc_x_avg / 1670.13
-            self.imu_msg_.linear_acceleration.y = acc_y_avg / 1670.13
-            self.imu_msg_.linear_acceleration.z = acc_z_avg / 1670.13
-            self.imu_msg_.angular_velocity.x = gyro_x_avg / 7509.55
-            self.imu_msg_.angular_velocity.y = gyro_y_avg / 7509.55
-            self.imu_msg_.angular_velocity.z = gyro_z_avg / 7509.55
+            # Full scale range +/- 250 degree/C as per sensitivity scale factor     
+            self.imu_msg_.linear_acceleration.x = acc_x / 1670.13
+            self.imu_msg_.linear_acceleration.y = acc_y / 1670.13
+            self.imu_msg_.linear_acceleration.z = acc_z / 1670.13
+            self.imu_msg_.angular_velocity.x = gyro_x / 7509.55
+            self.imu_msg_.angular_velocity.y = gyro_y / 7509.55
+            self.imu_msg_.angular_velocity.z = gyro_z / 7509.55
 
             self.imu_msg_.header.stamp = self.get_clock().now().to_msg()
             self.imu_pub_.publish(self.imu_msg_)
-
         except OSError:
             self.is_connected_ = False
 
@@ -101,11 +77,16 @@ class MPU6050_Driver(Node):
             self.is_connected_ = False
         
     def read_raw_data(self, addr):
+        #Accelero and Gyro value are 16-bit
         high = self.bus_.read_byte_data(DEVICE_ADDRESS, addr)
-        low = self.bus_.read_byte_data(DEVICE_ADDRESS, addr + 1)
-        value = (high << 8) | low
-        if value > 32768:
-            value -= 65536
+        low = self.bus_.read_byte_data(DEVICE_ADDRESS, addr+1)
+        
+        #concatenate higher and lower value
+        value = ((high << 8) | low)
+            
+        #to get signed value from mpu6050
+        if(value > 32768):
+            value = value - 65536
         return value
 
 

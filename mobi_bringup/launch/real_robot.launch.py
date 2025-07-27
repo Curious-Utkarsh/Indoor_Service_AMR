@@ -140,13 +140,6 @@ def generate_launch_description():
         launch_arguments={"use_sim_time": "False"}.items()
     )
 
-    ultrasonic_node = Node(
-        package="mobi_utils",
-        executable="ultrasonic.py",
-        name="ultrasonic_publisher",
-        output="screen"
-    )
-
     rviz = Node(
         package="rviz2",
         executable="rviz2",
@@ -158,6 +151,38 @@ def generate_launch_description():
         ],
         output="screen",
         parameters=[{"use_sim_time": False}]
+    )
+
+    vision = IncludeLaunchDescription( 
+        os.path.join(
+            get_package_share_directory("mobi_vision"),
+            "launch",
+            "vision.launch.py"
+        ),
+    )
+
+    speech = IncludeLaunchDescription( 
+        os.path.join(
+            get_package_share_directory("mobi_speech"),
+            "launch",
+            "speech.launch.py"
+        ),
+    )
+
+    script = IncludeLaunchDescription( 
+        os.path.join(
+            get_package_share_directory("mobi_script"),
+            "launch",
+            "script.launch.py"
+        ),
+    )
+
+    utils = IncludeLaunchDescription( 
+        os.path.join(
+            get_package_share_directory("mobi_utils"),
+            "launch",
+            "utils.launch.py"
+        ),
     )
 
     return LaunchDescription([
@@ -172,8 +197,11 @@ def generate_launch_description():
         imu_driver_node,
         localization,
         slam,
-        navigation,
+        #navigation,
         #ekf,
-        ultrasonic_node,
-        rviz,
+        #rviz,
+        #vision,
+        #speech,
+        #script,
+        utils,
     ])

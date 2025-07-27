@@ -5,17 +5,15 @@ def generate_launch_description():
     return LaunchDescription([
         Node(
             package='mobi_vision',
-            executable='hand_tracking',
-            name='hand_tracking_node',
+            executable='camera_publisher',
+            name='camera_publisher_node',
             output='screen',
-            parameters=[],
         ),
 
-        # Node(
-        #     package='mobi_vision',
-        #     executable='face_tracking',
-        #     name='face_tracking_node',
-        #     output='screen',
-        #     parameters=[],
-        # )
+        Node(
+            package='mobi_vision',
+            executable='aruco_service_server',
+            name='aruco_detector_node',
+            output='screen',
+        )
     ])

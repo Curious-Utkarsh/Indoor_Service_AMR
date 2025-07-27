@@ -81,10 +81,12 @@ class DistancePublisher(Node):
 
             # Publish Float32 distance
             msg = Float32()
-            msg.data = float(filtered_distance)
+            msg.data = float(filtered_distance) / 100.0  # convert cm to meters
+            #self.get_logger().info(f"Ultrasonic Distance = {msg.data}")
             self.distance_pub.publish(msg)
 
             # Publish RViz2 marker using filtered distance
+            filtered_distance = float(filtered_distance) 
             self.publish_marker(filtered_distance)
 
         except TimeoutError as e:

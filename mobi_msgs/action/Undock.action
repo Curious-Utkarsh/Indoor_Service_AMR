@@ -1,6 +1,11 @@
 # Goal
+bool trigger
+
 ---
 # Result
+bool success
+string message
+
 ---
 # Feedback
-bool success
+string step

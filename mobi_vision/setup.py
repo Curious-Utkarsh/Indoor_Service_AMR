@@ -25,8 +25,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'face_tracking = mobi_vision.face_tracking:main',
-            'hand_tracking = mobi_vision.hand_tracking:main',
+            'camera_publisher = mobi_vision.camera_publisher:main',
+            'aruco_service_server = mobi_vision.aruco_service_server:main',
         ],
     },
 )

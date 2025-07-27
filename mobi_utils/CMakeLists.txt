@@ -17,20 +17,18 @@ find_package(twist_mux_msgs REQUIRED)
 find_package(rclcpp_action REQUIRED)
 find_package(visualization_msgs REQUIRED)
 
-add_executable(safety_stop src/safety_stop.cpp)
-ament_target_dependencies(safety_stop rclcpp std_msgs sensor_msgs geometry_msgs twist_mux_msgs rclcpp_action visualization_msgs)
+install(
+  DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME}
+)
 
 ament_python_install_package(${PROJECT_NAME})
 
-install(TARGETS
-  safety_stop
-  DESTINATION lib/${PROJECT_NAME}
-)
-
 install(PROGRAMS
   ${PROJECT_NAME}/ultrasonic.py
+  ${PROJECT_NAME}/lidar_testing.py
+  ${PROJECT_NAME}/safety_stop.py
   DESTINATION lib/${PROJECT_NAME}
 )
-
 
 ament_package()

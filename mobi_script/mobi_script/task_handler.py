@@ -6,7 +6,7 @@ from geometry_msgs.msg import PoseStamped
 from rclpy.action import ActionClient, CancelResponse
 
 from nav2_msgs.action import NavigateToPose
-# from mobi_msgs.action import Dock, Undock  # Your custom docking actions
+from mobi_msgs.action import Undock  # ✅ Your custom Undock action
 
 import asyncio
 
@@ -20,8 +20,7 @@ class TaskHandler(Node):
 
         # Action clients
         self.nav_client = ActionClient(self, NavigateToPose, 'navigate_to_pose')
-        # self.dock_client = ActionClient(self, Dock, 'dock_action')
-        # self.undock_client = ActionClient(self, Undock, 'undock_action')
+        self.undock_client = ActionClient(self, Undock, 'undock')  # ✅ Undock client
 
         self.current_goal_handle = None
 
@@ -31,8 +30,6 @@ class TaskHandler(Node):
 
         if it == 'go_to_kitchen':
             asyncio.create_task(self.go_to_kitchen())
-        elif it == 'dock':
-            asyncio.create_task(self.call_dock())
         elif it == 'undock':
             asyncio.create_task(self.call_undock())
         elif it == 'stop':
@@ -61,28 +58,36 @@ class TaskHandler(Node):
         self.current_goal_handle = gh
         res = await gh.get_result_async()
         self.get_logger().info(f"Navigation result: {res.result}")
+        self.current_goal_handle = None
+
+    async def call_undock(self):
+        # DO NOT await here – it's a normal function
+        self.undock_client.wait_for_server()
+        self.get_logger().info("Sending undock request...")
+
+        goal = Undock.Goal()
+
+        # Define feedback callback
+        def feedback_cb(feedback_msg):
+            self.get_logger().info(f"Undock feedback: {feedback_msg.feedback.step}")
+
+        # Send goal with feedback callback
+        goal_future = self.undock_client.send_goal_async(goal, feedback_callback=feedback_cb)
+        gh = await goal_future
+
+        if not gh.accepted:
+            self.get_logger().warn("Undock goal rejected.")
+            return
+
+        self.current_goal_handle = gh
+
+        # Await result
+        res = await gh.get_result_async()
+        self.get_logger().info(f"Undock result: {res.result.success} - {res.result.message}")
 
         self.current_goal_handle = None
 
-    async def call_dock(self):
-        pass
-        # self.dock_client.wait_for_server()
-        # self.get_logger().info("Sending dock request...")
-        # gh = await self.dock_client.send_goal_async(Dock.Goal())
-        # self.current_goal_handle = gh
-        # res = await gh.get_result_async()
-        # self.get_logger().info(f"Dock result: {res.result.success}")
-        # self.current_goal_handle = None
 
-    async def call_undock(self):
-        pass
-        # self.undock_client.wait_for_server()
-        # self.get_logger().info("Sending undock request...")
-        # gh = await self.undock_client.send_goal_async(Undock.Goal())
-        # self.current_goal_handle = gh
-        # res = await gh.get_result_async()
-        # self.get_logger().info(f"Undock result: {res.result.success}")
-        # self.current_goal_handle = None
 
     def cancel_current_goal(self):
         if self.current_goal_handle:
