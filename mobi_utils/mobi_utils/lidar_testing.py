@@ -27,6 +27,8 @@ class LidarReader(Node):
             10
         )
 
+        self.get_logger().info(f"Lidar Node Started...")
+
     def scan_callback(self, msg: LaserScan):
         angles = {
             '0° (front)': 0,
