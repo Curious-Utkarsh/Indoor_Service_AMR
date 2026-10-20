@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Robot Launcher
-Comment=Manage real & simulated ROS2 robots
-Exec=robot-launcher
-Icon=robot-launcher
-Terminal=false
-Type=Application
-Categories=Development;Science;

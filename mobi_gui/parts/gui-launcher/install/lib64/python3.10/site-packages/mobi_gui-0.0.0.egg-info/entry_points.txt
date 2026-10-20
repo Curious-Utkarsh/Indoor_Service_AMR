@@ -1,3 +1,0 @@
-[console_scripts]
-gui = mobi_gui.gui:main
-
