@@ -63,7 +63,7 @@ ros2 launch mobi_bringup real_robot.launch.py serial_port:=/dev/ttyUSB0 map_name
 ros2 topic pub --once /mobi/intents std_msgs/msg/String "data: 'undock'"                           # test a behaviour
 ```
 
-The voice node needs Gemini and ElevenLabs keys; read them from environment variables rather than the source file.
+The voice node reads its keys from the environment: `export GEMINI_API_KEY=...` and `export ELEVENLABS_API_KEY=...` before launching it.
 
 ## Engineering notes
 
