@@ -44,7 +44,7 @@ class VoiceLLMNode(Node):
         self.gemini = genai.GenerativeModel('gemini-2.0-flash')
 
         # Setup ElevenLabs
-        self.eleven_client = ElevenLabs(api_key='sk_2bc7e63bba01d9b1f40e1fbe7304618b24e3a8f976d8f639')  # Replace with your key
+        self.eleven_client = ElevenLabs(api_key='')  # Put your key
 
         self.get_logger().info("Ready for voice commands.")
 
