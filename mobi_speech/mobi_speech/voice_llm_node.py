@@ -40,11 +40,11 @@ class VoiceLLMNode(Node):
         self.get_logger().info("Whisper model loaded")
 
         # Setup Gemini
-        genai.configure(api_key='')  # Put your key
+        genai.configure(api_key=os.getenv('GEMINI_API_KEY', ''))  # export GEMINI_API_KEY=...
         self.gemini = genai.GenerativeModel('gemini-2.0-flash')
 
         # Setup ElevenLabs
-        self.eleven_client = ElevenLabs(api_key='')  # Put your key
+        self.eleven_client = ElevenLabs(api_key=os.getenv('ELEVENLABS_API_KEY', ''))  # export ELEVENLABS_API_KEY=...
 
         self.get_logger().info("Ready for voice commands.")
 
