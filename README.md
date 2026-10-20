@@ -19,7 +19,9 @@ The torso carries a lifting rail and a pan-tilt head, built for arms that were p
 </tr>
 </table>
 
-Also: [joystick teleoperation](https://youtu.be/tbZFirvaFq8)
+Also: [joystick teleoperation](https://youtu.be/tbZFirvaFq8) · [face and hand tracking driving the head in Gazebo](https://youtu.be/g8SuOeqCy2A)
+
+Building Mobi from CAD to simulation (4-part series): [Fusion 360 CAD](https://youtu.be/TRADhNjp63E) · [URDF part 1](https://youtu.be/uwYU_mx7p3k) · [URDF part 2](https://youtu.be/GTiLhWPwOXQ) · [spawning in Gazebo](https://youtu.be/LI0W00ytupg)
 
 ## Key features
 
