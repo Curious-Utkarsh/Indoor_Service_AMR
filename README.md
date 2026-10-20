@@ -76,7 +76,7 @@ The voice node reads its keys from the environment: `export GEMINI_API_KEY=...` 
 
 - [MechaBot](https://github.com/MechaMind-Labs/AMR-Mastery) — the smaller robot I built next, with QR + LiDAR docking
 - [Aura](https://github.com/Curious-Utkarsh/ROS2_Mobile_Manipulator_Gazebo) — simulated predecessor with an arm and vision docking
-- [Final-year robot](https://github.com/Curious-Utkarsh/bumperbot_ws) — my first real ROS 2 robot
+- [Bumperbot](https://github.com/Curious-Utkarsh/bumperbot_ws) — an earlier differential-drive robot on real hardware
 - [TurtleBot3 ArUco docking](https://github.com/Curious-Utkarsh/TurtleBot3_Autonomous_Docking) — where the docking work started
 
 ## Credits
