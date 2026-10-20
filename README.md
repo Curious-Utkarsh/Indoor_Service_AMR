@@ -56,7 +56,7 @@ ROS 2 Humble · Nav2 · slam_toolbox · AMCL · ros2_control · twist_mux · Gaz
 
 ```bash
 mkdir -p ~/mobi_ws/src && cd ~/mobi_ws/src
-git clone https://github.com/Curious-Utkarsh/Indoor_Service_AMR.git .
+git clone https://github.com/Curious-Utkarsh/mobi-service-robot.git .
 cd ~/mobi_ws && rosdep install --from-paths src --ignore-src -r -y
 colcon build --symlink-install && source install/setup.bash
 
@@ -75,9 +75,9 @@ The voice node reads its keys from the environment: `export GEMINI_API_KEY=...` 
 ## Related
 
 - [MechaBot](https://github.com/MechaMind-Labs/AMR-Mastery) — the smaller robot I built next, with QR + LiDAR docking
-- [Aura](https://github.com/Curious-Utkarsh/ROS2_Mobile_Manipulator_Gazebo) — simulated predecessor with an arm and vision docking
-- [Bumperbot](https://github.com/Curious-Utkarsh/bumperbot_ws) — an earlier differential-drive robot on real hardware
-- [TurtleBot3 ArUco docking](https://github.com/Curious-Utkarsh/TurtleBot3_Autonomous_Docking) — where the docking work started
+- [Aura](https://github.com/Curious-Utkarsh/aura-mobile-manipulator) — simulated predecessor with an arm and vision docking
+- [Bumperbot](https://github.com/Curious-Utkarsh/bumperbot-diff-drive-robot) — an earlier differential-drive robot on real hardware
+- [TurtleBot3 ArUco docking](https://github.com/Curious-Utkarsh/turtlebot3-aruco-docking) — where the docking work started
 
 ## Credits
 
