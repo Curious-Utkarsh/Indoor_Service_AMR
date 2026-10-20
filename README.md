@@ -21,6 +21,8 @@ The torso carries a lifting rail and a pan-tilt head, built for arms that were p
 
 Also: [joystick teleoperation](https://youtu.be/tbZFirvaFq8) · [face and hand tracking driving the head in Gazebo](https://youtu.be/g8SuOeqCy2A)
 
+Build log on LinkedIn (2025): [physical structure](https://www.linkedin.com/feed/update/urn:li:activity:7308149354974875648/) · [drive base progress](https://www.linkedin.com/feed/update/urn:li:activity:7309089843953774592/) · [encoder readings at speed](https://www.linkedin.com/feed/update/urn:li:activity:7310514592126746629/) · [joystick control](https://www.linkedin.com/feed/update/urn:li:activity:7312521395224080385/) · [SLAM map distortion](https://www.linkedin.com/feed/update/urn:li:activity:7313719472240869376/) · [autonomous chassis](https://www.linkedin.com/feed/update/urn:li:activity:7315668001528127488/) · [A* vs Dijkstra](https://www.linkedin.com/feed/update/urn:li:activity:7342869348153217024/) · [Robot Launcher app](https://www.linkedin.com/feed/update/urn:li:activity:7345315157805305856/) · [adding the torso](https://www.linkedin.com/feed/update/urn:li:activity:7352925309186297858/) · [voice docking with an LLM](https://www.linkedin.com/feed/update/urn:li:activity:7355552667160530944/)
+
 Building Mobi from CAD to simulation (4-part series): [Fusion 360 CAD](https://youtu.be/TRADhNjp63E) · [URDF part 1](https://youtu.be/uwYU_mx7p3k) · [URDF part 2](https://youtu.be/GTiLhWPwOXQ) · [spawning in Gazebo](https://youtu.be/LI0W00ytupg)
 
 ## Key features
