@@ -1,0 +1,24 @@
+# colcon build outputs
+build/
+install/
+log/
+
+# Python
+__pycache__/
+*.pyc
+
+# Editors
+.vscode/
+
+# Local secrets
+.env
+*.env
+
+# Snap build outputs (Robot Launcher)
+mobi_gui/parts/
+mobi_gui/prime/
+mobi_gui/stage/
+*.snap
+
+# Recorded voice files
+mobi_speech/output_voice/*.wav
